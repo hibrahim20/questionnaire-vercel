@@ -1,0 +1,9 @@
+{
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "framework": "static",
+  "public": true,
+  "env": {
+    "GOOGLE_APPS_SCRIPT_URL": "https://script.google.com/macros/s/AKfycbygybZZ1tYQqoa0KX8WxwHUcmMzRinENunGb7bvW9VGR3NQwc57U7WAAl8nZ9-NYQ/exec"
+  }
+}

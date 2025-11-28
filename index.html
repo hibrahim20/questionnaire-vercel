@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Préparer votre projet immersif</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .form-content {
+            padding: 40px 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .radio-item,
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .radio-item label,
+        .checkbox-item label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: normal;
+        }
+
+        .multi-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .multi-input-item {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .multi-input-item input {
+            flex: 1;
+        }
+
+        .multi-input-item button {
+            padding: 8px 12px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .add-button {
+            padding: 10px 15px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .add-button:hover {
+            background: #229954;
+        }
+
+        .conditional-field {
+            display: none;
+            padding: 15px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .conditional-field.show {
+            display: block;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        button[type="submit"],
+        button[type="reset"] {
+            flex: 1;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button[type="submit"] {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        button[type="reset"] {
+            background: #ecf0f1;
+            color: #333;
+        }
+
+        button[type="reset"]:hover {
+            background: #bdc3c7;
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .form-content {
+                padding: 20px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            button[type="submit"],
+            button[type="reset"] {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Préparer votre projet immersif</h1>
+            <p>Ce questionnaire permet de mieux comprendre votre contexte et vos besoins afin de proposer une solution immersive adaptée : contenus 3D/360°, scénarios interactifs, casques/lunettes, intégration LMS, suivi pédagogique.</p>
+        </div>
+
+        <div class="form-content">
+            <div class="success-message" id="successMessage">
+                ✓ Votre réponse a été envoyée avec succès !
+            </div>
+            <div class="error-message" id="errorMessage">
+                ✗ Une erreur s'est produite. Veuillez réessayer.
+            </div>
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Envoi en cours...</p>
+            </div>
+
+            <form id="questionnaire" method="POST">
+                <!-- Section 1: Informations générales -->
+                <div class="section">
+                    <h2 class="section-title">Informations générales</h2>
+
+                    <div class="form-group">
+                        <label for="organisation">Nom de l'organisation <span class="required">*</span></label>
+                        <input type="text" id="organisation" name="organisation" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="organisationType">Type d'organisation</label>
+                        <select id="organisationType" name="organisationType">
+                            <option value="">-- Sélectionner --</option>
+                            <option value="Établissement d'enseignement">Établissement d'enseignement</option>
+                            <option value="Centre de formation">Centre de formation</option>
+                            <option value="Entreprise">Entreprise</option>
+                            <option value="Collectivité / administration">Collectivité / administration</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactName">Nom et prénom du contact principal <span class="required">*</span></label>
+                        <input type="text" id="contactName" name="contactName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactRole">Fonction / rôle</label>
+                        <input type="text" id="contactRole" name="contactRole">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Adresse e-mail <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Téléphone (optionnel)</label>
+                        <input type="text" id="phone" name="phone">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Public concerné par les modules immersifs <span class="required">*</span></label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="audience_students" name="audience" value="Étudiants / élèves">
+                                <label for="audience_students">Étudiants / élèves</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="audience_continuous" name="audience" value="Apprenants en formation continue">
+                                <label for="audience_continuous">Apprenants en formation continue</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="audience_employees" name="audience" value="Salariés">
+                                <label for="audience_employees">Salariés</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="audience_managers" name="audience" value="Managers / encadrement">
+                                <label for="audience_managers">Managers / encadrement</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="audience_public" name="audience" value="Grand public">
+                                <label for="audience_public">Grand public</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="audience_other" name="audience" value="Autre">
+                                <label for="audience_other">Autre</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estimatedLearners">Nombre approximatif de personnes concernées par le projet (par an)</label>
+                        <input type="number" id="estimatedLearners" name="estimatedLearners" min="1">
+                    </div>
+                </div>
+
+                <!-- Section 2: Objectifs et domaines -->
+                <div class="section">
+                    <h2 class="section-title">Objectifs et domaines</h2>
+
+                    <div class="form-group">
+                        <label for="mainGoals">Quels sont les objectifs principaux du projet immersif ? <span class="required">*</span></label>
+                        <textarea id="mainGoals" name="mainGoals" required></textarea>
+                        <div class="help-text">Par exemple : sensibilisation, formation à des procédures, simulation de situations, prévention, visite virtuelle…</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Domaines ou thématiques concernés <span class="required">*</span></label>
+                        <div class="multi-input-group" id="domainsGroup">
+                            <div class="multi-input-item">
+                                <input type="text" placeholder="Domaine 1" class="domain-input">
+                                <button type="button" onclick="removeDomain(this)">Supprimer</button>
+                            </div>
+                        </div>
+                        <button type="button" class="add-button" onclick="addDomain()">+ Ajouter un domaine</button>
+                        <div class="help-text">Ajoutez un ou plusieurs domaines, par exemple : logistique, sécurité, maintenance, relation client, santé, etc.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Souhaitez-vous que les modules soient alignés sur un référentiel pédagogique ? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="framework_official" name="hasPedagogicalFramework" value="Oui, sur un référentiel officiel" onchange="toggleFrameworkFields()">
+                                <label for="framework_official">Oui, sur un référentiel officiel</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="framework_internal" name="hasPedagogicalFramework" value="Oui, sur un référentiel interne (programme, livret de formation, compétences maison)" onchange="toggleFrameworkFields()">
+                                <label for="framework_internal">Oui, sur un référentiel interne</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="framework_free" name="hasPedagogicalFramework" value="Non, contenu libre" onchange="toggleFrameworkFields()">
+                                <label for="framework_free">Non, contenu libre</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="framework_define" name="hasPedagogicalFramework" value="À définir ensemble" onchange="toggleFrameworkFields()">
+                                <label for="framework_define">À définir ensemble</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group conditional-field" id="frameworkNameField">
+                        <label for="pedagogicalFrameworkName">Nom du référentiel ou du cadre de compétences</label>
+                        <input type="text" id="pedagogicalFrameworkName" name="pedagogicalFrameworkName">
+                    </div>
+
+                    <div class="form-group conditional-field" id="frameworkDetailsField">
+                        <label for="pedagogicalFrameworkDetails">Compétences ou objectifs précis à cibler (si connus)</label>
+                        <textarea id="pedagogicalFrameworkDetails" name="pedagogicalFrameworkDetails"></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 3: Contenus et interactivité -->
+                <div class="section">
+                    <h2 class="section-title">Contenus et interactivité</h2>
+
+                    <div class="form-group">
+                        <label>Combien de modules immersifs souhaitez-vous envisager ? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="modules_1_3" name="modulesCountEstimate" value="1 à 3 modules" required>
+                                <label for="modules_1_3">1 à 3 modules</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="modules_4_8" name="modulesCountEstimate" value="4 à 8 modules">
+                                <label for="modules_4_8">4 à 8 modules</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="modules_9plus" name="modulesCountEstimate" value="9 modules ou plus">
+                                <label for="modules_9plus">9 modules ou plus</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="modules_define" name="modulesCountEstimate" value="À définir ensemble">
+                                <label for="modules_define">À définir ensemble</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="moduleTypesDescription">Si vous avez déjà des idées de modules, décrivez-les ici</label>
+                        <textarea id="moduleTypesDescription" name="moduleTypesDescription"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Niveau d'interactivité souhaité <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="interactivity_essential" name="interactivityLevel" value="Essentiel : navigation, points d'information, quiz simples" required>
+                                <label for="interactivity_essential">Essentiel : navigation, points d'information, quiz simples</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="interactivity_intermediate" name="interactivityLevel" value="Intermédiaire : interactions guidées, actions à réaliser, feedback">
+                                <label for="interactivity_intermediate">Intermédiaire : interactions guidées, actions à réaliser, feedback</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="interactivity_advanced" name="interactivityLevel" value="Avancé : scénarios à embranchements, logique conditionnelle, parcours multiples">
+                                <label for="interactivity_advanced">Avancé : scénarios à embranchements, logique conditionnelle, parcours multiples</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="interactivity_unknown" name="interactivityLevel" value="Je ne sais pas encore / à définir ensemble">
+                                <label for="interactivity_unknown">Je ne sais pas encore / à définir ensemble</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Formats de contenus souhaités</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="format_360video" name="contentFormats" value="Vidéos 360°">
+                                <label for="format_360video">Vidéos 360°</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="format_360photo" name="contentFormats" value="Photos 360°">
+                                <label for="format_360photo">Photos 360°</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="format_3d" name="contentFormats" value="Animations ou schémas 3D">
+                                <label for="format_3d">Animations ou schémas 3D</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="format_visuals" name="contentFormats" value="Visuels (tableaux, graphiques, infographies)">
+                                <label for="format_visuals">Visuels (tableaux, graphiques, infographies)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="format_audio" name="contentFormats" value="Audio / voix off">
+                                <label for="format_audio">Audio / voix off</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="format_games" name="contentFormats" value="Mini-jeux ou mécaniques gamifiées">
+                                <label for="format_games">Mini-jeux ou mécaniques gamifiées</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="format_other" name="contentFormats" value="Autre format">
+                                <label for="format_other">Autre format</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Disposez-vous déjà de ressources à intégrer ?</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="assets_photos" name="existingAssets" value="Photos / vidéos existantes">
+                                <label for="assets_photos">Photos / vidéos existantes</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="assets_technical" name="existingAssets" value="Plans, schémas ou documents techniques">
+                                <label for="assets_technical">Plans, schémas ou documents techniques</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="assets_pedagogical" name="existingAssets" value="Supports pédagogiques (PDF, PPT, etc.)">
+                                <label for="assets_pedagogical">Supports pédagogiques (PDF, PPT, etc.)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="assets_3d" name="existingAssets" value="Modèles 3D">
+                                <label for="assets_3d">Modèles 3D</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="assets_none" name="existingAssets" value="Aucune ressource existante">
+                                <label for="assets_none">Aucune ressource existante</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="assets_other" name="existingAssets" value="Autre">
+                                <label for="assets_other">Autre</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Souhaitez-vous une visualisation en temps réel dans le navigateur, dans des casques VR, ou les deux ? <span class="required">*</span></label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="viz_browser" name="realTimeVisualizationNeed" value="Navigateur web (ordinateur ou tablette)" required>
+                                <label for="viz_browser">Navigateur web (ordinateur ou tablette)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="viz_vr" name="realTimeVisualizationNeed" value="Casques de réalité virtuelle (par exemple : Meta Quest)">
+                                <label for="viz_vr">Casques de réalité virtuelle (par exemple : Meta Quest)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="viz_both" name="realTimeVisualizationNeed" value="Les deux">
+                                <label for="viz_both">Les deux</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="viz_define" name="realTimeVisualizationNeed" value="À définir">
+                                <label for="viz_define">À définir</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Évaluation et suivi -->
+                <div class="section">
+                    <h2 class="section-title">Évaluation et suivi</h2>
+
+                    <div class="form-group">
+                        <label>Souhaitez-vous intégrer de l'évaluation dans les modules immersifs ? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="assessment_simple" name="needAssessment" value="Oui, de manière simple (quiz, validation de compréhension)" onchange="toggleAssessmentFields()" required>
+                                <label for="assessment_simple">Oui, de manière simple (quiz, validation de compréhension)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="assessment_advanced" name="needAssessment" value="Oui, de manière avancée (scoring, indicateurs, parcours évaluatifs)" onchange="toggleAssessmentFields()">
+                                <label for="assessment_advanced">Oui, de manière avancée (scoring, indicateurs, parcours évaluatifs)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="assessment_no" name="needAssessment" value="Non, usage uniquement exploratoire / démonstratif" onchange="toggleAssessmentFields()">
+                                <label for="assessment_no">Non, usage uniquement exploratoire / démonstratif</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="assessment_define" name="needAssessment" value="À définir ensemble" onchange="toggleAssessmentFields()">
+                                <label for="assessment_define">À définir ensemble</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group conditional-field" id="assessmentDetailsField">
+                        <label for="assessmentDetails">Si oui, précisez éventuellement le type d'évaluation souhaité</label>
+                        <textarea id="assessmentDetails" name="assessmentDetails"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Disposez-vous d'une plateforme LMS pour héberger et suivre les modules ? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="lms_yes" name="hasLms" value="Oui" onchange="toggleLmsFields()" required>
+                                <label for="lms_yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="lms_unknown" name="hasLms" value="Oui, mais je ne connais pas les détails techniques" onchange="toggleLmsFields()">
+                                <label for="lms_unknown">Oui, mais je ne connais pas les détails techniques</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="lms_no" name="hasLms" value="Non" onchange="toggleLmsFields()">
+                                <label for="lms_no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group conditional-field" id="lmsNameField">
+                        <label for="lmsName">Nom de la plateforme LMS</label>
+                        <input type="text" id="lmsName" name="lmsName">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Formats techniques souhaités ou envisagés</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="format_scorm" name="technicalFormats" value="SCORM">
+                                <label for="format_scorm">SCORM</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="format_lti" name="technicalFormats" value="LTI 1.3">
+                                <label for="format_lti">LTI 1.3</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="format_web" name="technicalFormats" value="Lien web simple">
+                                <label for="format_web">Lien web simple</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="format_xapi" name="technicalFormats" value="xAPI / CMI5 (à étudier)">
+                                <label for="format_xapi">xAPI / CMI5 (à étudier)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="format_tech_define" name="technicalFormats" value="À définir ensemble">
+                                <label for="format_tech_define">À définir ensemble</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Quels types de données de suivi vous intéressent ?</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tracking_time" name="trackingNeeds" value="Temps passé">
+                                <label for="tracking_time">Temps passé</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tracking_completion" name="trackingNeeds" value="Taux de complétion">
+                                <label for="tracking_completion">Taux de complétion</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tracking_scores" name="trackingNeeds" value="Scores / résultats">
+                                <label for="tracking_scores">Scores / résultats</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tracking_interactions" name="trackingNeeds" value="Interactions réalisées (clics, choix, parcours)">
+                                <label for="tracking_interactions">Interactions réalisées (clics, choix, parcours)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tracking_export" name="trackingNeeds" value="Export de données (CSV, rapport enseignant / manager)">
+                                <label for="tracking_export">Export de données (CSV, rapport enseignant / manager)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tracking_none" name="trackingNeeds" value="Aucun besoin particulier">
+                                <label for="tracking_none">Aucun besoin particulier</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tracking_define" name="trackingNeeds" value="À définir ensemble">
+                                <label for="tracking_define">À définir ensemble</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 5: Matériel et contexte -->
+                <div class="section">
+                    <h2 class="section-title">Matériel et contexte d'utilisation</h2>
+
+                    <div class="form-group">
+                        <label>Dans quels contextes les modules seront-ils principalement utilisés ?</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="context_classroom" name="usageContexts" value="Salle de cours / formation présentielle">
+                                <label for="context_classroom">Salle de cours / formation présentielle</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="context_lab" name="usageContexts" value="Salle informatique ou laboratoire">
+                                <label for="context_lab">Salle informatique ou laboratoire</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="context_individual" name="usageContexts" value="Utilisation individuelle (ordinateur ou casque dédié)">
+                                <label for="context_individual">Utilisation individuelle (ordinateur ou casque dédié)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="context_events" name="usageContexts" value="Événements, salons, journées portes ouvertes">
+                                <label for="context_events">Événements, salons, journées portes ouvertes</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="context_other" name="usageContexts" value="Autre">
+                                <label for="context_other">Autre</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Disposez-vous déjà de casques ou lunettes de réalité virtuelle ? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="vr_yes" name="hasVrHeadsets" value="Oui" onchange="toggleVrFields()" required>
+                                <label for="vr_yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="vr_no" name="hasVrHeadsets" value="Non" onchange="toggleVrFields()">
+                                <label for="vr_no">Non</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group conditional-field" id="vrHeadsetsDetailsField">
+                        <label for="vrHeadsetsDetails">Si oui, indiquez les modèles et quantités approximatives</label>
+                        <textarea id="vrHeadsetsDetails" name="vrHeadsetsDetails"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Souhaitez-vous une recommandation pour le matériel ?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="hardware_yes" name="needHardwareAdvice" value="Oui">
+                                <label for="hardware_yes">Oui</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="hardware_no" name="needHardwareAdvice" value="Non">
+                                <label for="hardware_no">Non</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="hardware_discuss" name="needHardwareAdvice" value="À discuter">
+                                <label for="hardware_discuss">À discuter</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 6: Planning et budget -->
+                <div class="section">
+                    <h2 class="section-title">Planning et budget</h2>
+
+                    <div class="form-group">
+                        <label>Horizon souhaité pour la mise en place des premiers modules <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="timeline_3months" name="desiredStart" value="Moins de 3 mois" required>
+                                <label for="timeline_3months">Moins de 3 mois</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="timeline_6months" name="desiredStart" value="Entre 3 et 6 mois">
+                                <label for="timeline_6months">Entre 3 et 6 mois</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="timeline_6plus" name="desiredStart" value="Plus de 6 mois">
+                                <label for="timeline_6plus">Plus de 6 mois</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="timeline_flexible" name="desiredStart" value="Flexible">
+                                <label for="timeline_flexible">Flexible</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Fourchette budgétaire indicative (facultatif)</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="budget_10k" name="budgetRange" value="Moins de 10 000 €">
+                                <label for="budget_10k">Moins de 10 000 €</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="budget_30k" name="budgetRange" value="Entre 10 000 € et 30 000 €">
+                                <label for="budget_30k">Entre 10 000 € et 30 000 €</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="budget_60k" name="budgetRange" value="Entre 30 000 € et 60 000 €">
+                                <label for="budget_60k">Entre 30 000 € et 60 000 €</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="budget_60plus" name="budgetRange" value="Plus de 60 000 €">
+                                <label for="budget_60plus">Plus de 60 000 €</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="budget_confidential" name="budgetRange" value="Non communiqué">
+                                <label for="budget_confidential">Non communiqué</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="constraints">Contraintes particulières, remarques ou informations complémentaires</label>
+                        <textarea id="constraints" name="constraints"></textarea>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="submit">Envoyer ma réponse</button>
+                    <button type="reset">Réinitialiser</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Google Apps Script Web App URL - À remplacer par votre URL
+        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbygybZZ1tYQqoa0KX8WxwHUcmMzRinENunGb7bvW9VGR3NQwc57U7WAAl8nZ9-NYQ/exec';
+
+        // Toggle conditional fields
+        function toggleFrameworkFields() {
+            const value = document.querySelector('input[name="hasPedagogicalFramework"]:checked')?.value;
+            const nameField = document.getElementById('frameworkNameField');
+            const detailsField = document.getElementById('frameworkDetailsField');
+            
+            if (value && (value.includes('Oui'))) {
+                nameField.classList.add('show');
+                detailsField.classList.add('show');
+            } else {
+                nameField.classList.remove('show');
+                detailsField.classList.remove('show');
+            }
+        }
+
+        function toggleAssessmentFields() {
+            const value = document.querySelector('input[name="needAssessment"]:checked')?.value;
+            const field = document.getElementById('assessmentDetailsField');
+            
+            if (value && (value.includes('Oui'))) {
+                field.classList.add('show');
+            } else {
+                field.classList.remove('show');
+            }
+        }
+
+        function toggleLmsFields() {
+            const value = document.querySelector('input[name="hasLms"]:checked')?.value;
+            const field = document.getElementById('lmsNameField');
+            
+            if (value === 'Oui') {
+                field.classList.add('show');
+            } else {
+                field.classList.remove('show');
+            }
+        }
+
+        function toggleVrFields() {
+            const value = document.querySelector('input[name="hasVrHeadsets"]:checked')?.value;
+            const field = document.getElementById('vrHeadsetsDetailsField');
+            
+            if (value === 'Oui') {
+                field.classList.add('show');
+            } else {
+                field.classList.remove('show');
+            }
+        }
+
+        // Multi-input for domains
+        function addDomain() {
+            const group = document.getElementById('domainsGroup');
+            const newItem = document.createElement('div');
+            newItem.className = 'multi-input-item';
+            newItem.innerHTML = `
+                <input type="text" placeholder="Domaine" class="domain-input">
+                <button type="button" onclick="removeDomain(this)">Supprimer</button>
+            `;
+            group.appendChild(newItem);
+        }
+
+        function removeDomain(button) {
+            button.parentElement.remove();
+        }
+
+        // Form submission
+        document.getElementById('questionnaire').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const loading = document.getElementById('loading');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Hide messages
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            loading.style.display = 'block';
+
+            try {
+                // Collect form data
+                const formData = new FormData(document.getElementById('questionnaire'));
+                const data = Object.fromEntries(formData);
+
+                // Collect checkboxes and radio buttons properly
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+                const radios = document.querySelectorAll('input[type="radio"]:checked');
+                
+                checkboxes.forEach(cb => {
+                    if (data[cb.name]) {
+                        data[cb.name] = Array.isArray(data[cb.name]) ? 
+                            [...data[cb.name], cb.value] : 
+                            [data[cb.name], cb.value];
+                    } else {
+                        data[cb.name] = cb.value;
+                    }
+                });
+
+                // Collect domains
+                const domains = Array.from(document.querySelectorAll('.domain-input'))
+                    .map(input => input.value)
+                    .filter(val => val.trim());
+                data.domains = domains.join('; ');
+
+                // Add timestamp
+                data.timestamp = new Date().toLocaleString('fr-FR');
+
+                // Send to Google Apps Script
+                const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify(data)
+                });
+
+                loading.style.display = 'none';
+                successMessage.style.display = 'block';
+                document.getElementById('questionnaire').reset();
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            } catch (error) {
+                console.error('Erreur:', error);
+                loading.style.display = 'none';
+                errorMessage.style.display = 'block';
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            toggleFrameworkFields();
+            toggleAssessmentFields();
+            toggleLmsFields();
+            toggleVrFields();
+        });
+    </script>
+</body>
+</html>
