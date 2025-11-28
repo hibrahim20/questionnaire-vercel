@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Préparer votre projet immersif</title>
+    <title id="i18n-page-title">Préparer votre projet immersif</title>
     <style>
         * {
             margin: 0;
@@ -32,6 +32,7 @@
             color: white;
             padding: 40px 30px;
             text-align: center;
+            position: relative; /* Pour positionner le sélecteur de langue */
         }
 
         .header h1 {
@@ -277,6 +278,24 @@
             100% { transform: rotate(360deg); }
         }
 
+        .language-selector {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .language-selector option {
+            color: #333;
+            background: white;
+        }
+
         @media (max-width: 600px) {
             .header h1 {
                 font-size: 22px;
@@ -294,6 +313,12 @@
             button[type="reset"] {
                 width: 100%;
             }
+            
+            .language-selector {
+                position: static;
+                margin-bottom: 15px;
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -301,405 +326,370 @@
 
     <div class="container">
         <div class="header">
-            <h1>Préparer votre projet immersif</h1>
-            <p>Ce questionnaire permet de mieux comprendre votre contexte et vos besoins afin de proposer une solution immersive adaptée : contenus 3D/360°, scénarios interactifs, casques/lunettes, intégration LMS, suivi pédagogique.</p>
+            <select id="language-selector" class="language-selector">
+                <option value="fr">Français</option>
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="de">Deutsch</option>
+            </select>
+            <h1 id="i18n-header-title">Préparer votre projet immersif</h1>
+            <p id="i18n-header-subtitle">Ce questionnaire permet de mieux comprendre votre contexte et vos besoins afin de proposer une solution immersive adaptée : contenus 3D/360°, scénarios interactifs, casques/lunettes, intégration LMS, suivi pédagogique.</p>
         </div>
 
         <div class="form-content">
             <div class="success-message" id="successMessage">
-                ✓ Votre réponse a été envoyée avec succès !
+                ✓ <span id="i18n-success-message">Votre réponse a été envoyée avec succès !</span>
             </div>
             <div class="error-message" id="errorMessage">
-                ✗ Une erreur s'est produite. Veuillez réessayer.
+                ✗ <span id="i18n-error-message">Une erreur s'est produite. Veuillez réessayer.</span>
             </div>
             <div class="loading" id="loading">
                 <div class="spinner"></div>
-                <p>Envoi en cours...</p>
+                <p id="i18n-loading-message">Envoi en cours...</p>
             </div>
 
             <form id="questionnaire" method="POST">
                 <!-- Section 1: Informations générales -->
                 <div class="section">
-                    <h2 class="section-title">Informations générales</h2>
+                    <h2 class="section-title" id="i18n-section-1-title">Informations générales</h2>
 
                     <div class="form-group">
-                        <label for="organisation">Nom de l'organisation <span class="required">*</span></label>
+                        <label for="organisation" id="i18n-organisation-label">Nom de l'organisation <span class="required">*</span></label>
                         <input type="text" id="organisation" name="organisation" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="organisationType">Type d'organisation</label>
+                        <label for="organisationType" id="i18n-organisation-type-label">Type d'organisation</label>
                         <select id="organisationType" name="organisationType">
-                            <option value="">-- Sélectionner --</option>
-                            <option value="Établissement d'enseignement">Établissement d'enseignement</option>
-                            <option value="Centre de formation">Centre de formation</option>
-                            <option value="Entreprise">Entreprise</option>
-                            <option value="Collectivité / administration">Collectivité / administration</option>
-                            <option value="Autre">Autre</option>
+                            <option value="" id="i18n-select-default">-- Sélectionner --</option>
+                            <option value="Établissement d'enseignement" id="i18n-org-type-education">Établissement d'enseignement</option>
+                            <option value="Centre de formation" id="i18n-org-type-training">Centre de formation</option>
+                            <option value="Entreprise" id="i18n-org-type-company">Entreprise</option>
+                            <option value="Collectivité / administration" id="i18n-org-type-public">Collectivité / administration</option>
+                            <option value="Autre" id="i18n-org-type-other">Autre</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="contactName">Nom et prénom du contact principal <span class="required">*</span></label>
+                        <label for="contactName" id="i18n-contact-name-label">Nom et prénom du contact principal <span class="required">*</span></label>
                         <input type="text" id="contactName" name="contactName" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="contactRole">Fonction / rôle</label>
+                        <label for="contactRole" id="i18n-contact-role-label">Fonction / rôle</label>
                         <input type="text" id="contactRole" name="contactRole">
                     </div>
 
                     <div class="form-group">
-                        <label for="email">Adresse e-mail <span class="required">*</span></label>
-                        <input type="email" id="email" name="email" required>
+                        <label for="contactEmail" id="i18n-contact-email-label">Adresse e-mail <span class="required">*</span></label>
+                        <input type="email" id="contactEmail" name="contactEmail" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="phone">Téléphone (optionnel)</label>
-                        <input type="text" id="phone" name="phone">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Public concerné par les modules immersifs <span class="required">*</span></label>
-                        <div class="checkbox-group">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="audience_students" name="audience" value="Étudiants / élèves">
-                                <label for="audience_students">Étudiants / élèves</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="audience_continuous" name="audience" value="Apprenants en formation continue">
-                                <label for="audience_continuous">Apprenants en formation continue</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="audience_employees" name="audience" value="Salariés">
-                                <label for="audience_employees">Salariés</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="audience_managers" name="audience" value="Managers / encadrement">
-                                <label for="audience_managers">Managers / encadrement</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="audience_public" name="audience" value="Grand public">
-                                <label for="audience_public">Grand public</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="audience_other" name="audience" value="Autre">
-                                <label for="audience_other">Autre</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="estimatedLearners">Nombre approximatif de personnes concernées par le projet (par an)</label>
-                        <input type="number" id="estimatedLearners" name="estimatedLearners" min="1">
+                        <label for="contactPhone" id="i18n-contact-phone-label">Numéro de téléphone</label>
+                        <input type="text" id="contactPhone" name="contactPhone">
                     </div>
                 </div>
 
-                <!-- Section 2: Objectifs et domaines -->
+                <!-- Section 2: Contexte du projet -->
                 <div class="section">
-                    <h2 class="section-title">Objectifs et domaines</h2>
+                    <h2 class="section-title" id="i18n-section-2-title">Contexte du projet</h2>
 
                     <div class="form-group">
-                        <label for="mainGoals">Quels sont les objectifs principaux du projet immersif ? <span class="required">*</span></label>
-                        <textarea id="mainGoals" name="mainGoals" required></textarea>
-                        <div class="help-text">Par exemple : sensibilisation, formation à des procédures, simulation de situations, prévention, visite virtuelle…</div>
+                        <label for="projectTitle" id="i18n-project-title-label">Titre du projet (si existant)</label>
+                        <input type="text" id="projectTitle" name="projectTitle">
                     </div>
 
                     <div class="form-group">
-                        <label>Domaines ou thématiques concernés <span class="required">*</span></label>
-                        <div class="multi-input-group" id="domainsGroup">
-                            <div class="multi-input-item">
-                                <input type="text" placeholder="Domaine 1" class="domain-input">
-                                <button type="button" onclick="removeDomain(this)">Supprimer</button>
+                        <label for="projectGoal" id="i18n-project-goal-label">Objectif principal du projet immersif <span class="required">*</span></label>
+                        <textarea id="projectGoal" name="projectGoal" required></textarea>
+                        <p class="help-text" id="i18n-project-goal-help">Ex: Réduire les erreurs de manipulation, former à une procédure dangereuse, améliorer la mémorisation, etc.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label id="i18n-audience-label">Public concerné <span class="required">*</span></label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="audience-students" name="audience" value="Étudiants / Élèves" required>
+                                <label for="audience-students" id="i18n-audience-students">Étudiants / Élèves</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="audience-employees" name="audience" value="Employés / Collaborateurs" required>
+                                <label for="audience-employees" id="i18n-audience-employees">Employés / Collaborateurs</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="audience-clients" name="audience" value="Clients / Partenaires" required>
+                                <label for="audience-clients" id="i18n-audience-clients">Clients / Partenaires</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="audience-other" name="audience" value="Autre">
+                                <label for="audience-other" id="i18n-audience-other">Autre (préciser)</label>
                             </div>
                         </div>
-                        <button type="button" class="add-button" onclick="addDomain()">+ Ajouter un domaine</button>
-                        <div class="help-text">Ajoutez un ou plusieurs domaines, par exemple : logistique, sécurité, maintenance, relation client, santé, etc.</div>
                     </div>
 
                     <div class="form-group">
-                        <label>Souhaitez-vous que les modules soient alignés sur un référentiel pédagogique ? <span class="required">*</span></label>
+                        <label for="numberOfUsers" id="i18n-number-of-users-label">Nombre estimé d'utilisateurs par an</label>
+                        <input type="number" id="numberOfUsers" name="numberOfUsers" min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="targetDate" id="i18n-target-date-label">Date de mise en œuvre souhaitée</label>
+                        <input type="text" id="targetDate" name="targetDate" placeholder="Ex: Q3 2024, Janvier 2025">
+                    </div>
+
+                    <div class="form-group">
+                        <label id="i18n-framework-label">Disposez-vous d'un référentiel pédagogique ou d'un cahier des charges ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="framework_official" name="hasPedagogicalFramework" value="Oui, sur un référentiel officiel" onchange="toggleFrameworkFields()">
-                                <label for="framework_official">Oui, sur un référentiel officiel</label>
+                                <input type="radio" id="framework_yes_complete" name="hasPedagogicalFramework" value="Oui, complet" onchange="toggleFrameworkFields()">
+                                <label for="framework_yes_complete" id="i18n-framework-yes-complete">Oui, complet</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="framework_internal" name="hasPedagogicalFramework" value="Oui, sur un référentiel interne (programme, livret de formation, compétences maison)" onchange="toggleFrameworkFields()">
-                                <label for="framework_internal">Oui, sur un référentiel interne</label>
+                                <input type="radio" id="framework_yes_draft" name="hasPedagogicalFramework" value="Oui, en cours de rédaction" onchange="toggleFrameworkFields()">
+                                <label for="framework_yes_draft" id="i18n-framework-yes-draft">Oui, en cours de rédaction</label>
                             </div>
                             <div class="radio-item">
-                                <input type="radio" id="framework_free" name="hasPedagogicalFramework" value="Non, contenu libre" onchange="toggleFrameworkFields()">
-                                <label for="framework_free">Non, contenu libre</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="framework_define" name="hasPedagogicalFramework" value="À définir ensemble" onchange="toggleFrameworkFields()">
-                                <label for="framework_define">À définir ensemble</label>
+                                <input type="radio" id="framework_no" name="hasPedagogicalFramework" value="Non" onchange="toggleFrameworkFields()" checked>
+                                <label for="framework_no" id="i18n-framework-no">Non</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group conditional-field" id="frameworkNameField">
-                        <label for="pedagogicalFrameworkName">Nom du référentiel ou du cadre de compétences</label>
-                        <input type="text" id="pedagogicalFrameworkName" name="pedagogicalFrameworkName">
+                        <label for="frameworkName" id="i18n-framework-name-label">Nom du référentiel / cahier des charges</label>
+                        <input type="text" id="frameworkName" name="frameworkName">
                     </div>
 
                     <div class="form-group conditional-field" id="frameworkDetailsField">
-                        <label for="pedagogicalFrameworkDetails">Compétences ou objectifs précis à cibler (si connus)</label>
-                        <textarea id="pedagogicalFrameworkDetails" name="pedagogicalFrameworkDetails"></textarea>
+                        <label for="frameworkDetails" id="i18n-framework-details-label">Détails sur les compétences visées</label>
+                        <textarea id="frameworkDetails" name="frameworkDetails"></textarea>
                     </div>
                 </div>
 
-                <!-- Section 3: Contenus et interactivité -->
+                <!-- Section 3: Contenu et scénario -->
                 <div class="section">
-                    <h2 class="section-title">Contenus et interactivité</h2>
+                    <h2 class="section-title" id="i18n-section-3-title">Contenu et scénario</h2>
 
                     <div class="form-group">
-                        <label>Combien de modules immersifs souhaitez-vous envisager ? <span class="required">*</span></label>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="modules_1_3" name="modulesCountEstimate" value="1 à 3 modules" required>
-                                <label for="modules_1_3">1 à 3 modules</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="modules_4_8" name="modulesCountEstimate" value="4 à 8 modules">
-                                <label for="modules_4_8">4 à 8 modules</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="modules_9plus" name="modulesCountEstimate" value="9 modules ou plus">
-                                <label for="modules_9plus">9 modules ou plus</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="modules_define" name="modulesCountEstimate" value="À définir ensemble">
-                                <label for="modules_define">À définir ensemble</label>
-                            </div>
-                        </div>
+                        <label for="contentNature" id="i18n-content-nature-label">Nature du contenu immersif</label>
+                        <select id="contentNature" name="contentNature">
+                            <option value="" id="i18n-select-default-2">-- Sélectionner --</option>
+                            <option value="Scénario interactif 3D" id="i18n-content-nature-3d">Scénario interactif 3D (environnement virtuel)</option>
+                            <option value="Vidéo 360° interactive" id="i18n-content-nature-360">Vidéo 360° interactive</option>
+                            <option value="Visite virtuelle" id="i18n-content-nature-virtual-tour">Visite virtuelle (photos/vidéos 360°)</option>
+                            <option value="Autre" id="i18n-content-nature-other">Autre</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="moduleTypesDescription">Si vous avez déjà des idées de modules, décrivez-les ici</label>
-                        <textarea id="moduleTypesDescription" name="moduleTypesDescription"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Niveau d'interactivité souhaité <span class="required">*</span></label>
-                        <div class="radio-group">
-                            <div class="radio-item">
-                                <input type="radio" id="interactivity_essential" name="interactivityLevel" value="Essentiel : navigation, points d'information, quiz simples" required>
-                                <label for="interactivity_essential">Essentiel : navigation, points d'information, quiz simples</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="interactivity_intermediate" name="interactivityLevel" value="Intermédiaire : interactions guidées, actions à réaliser, feedback">
-                                <label for="interactivity_intermediate">Intermédiaire : interactions guidées, actions à réaliser, feedback</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="interactivity_advanced" name="interactivityLevel" value="Avancé : scénarios à embranchements, logique conditionnelle, parcours multiples">
-                                <label for="interactivity_advanced">Avancé : scénarios à embranchements, logique conditionnelle, parcours multiples</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" id="interactivity_unknown" name="interactivityLevel" value="Je ne sais pas encore / à définir ensemble">
-                                <label for="interactivity_unknown">Je ne sais pas encore / à définir ensemble</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Formats de contenus souhaités</label>
+                        <label id="i18n-content-formats-label">Formats de contenus souhaités</label>
                         <div class="checkbox-group">
                             <div class="checkbox-item">
                                 <input type="checkbox" id="format_360video" name="contentFormats" value="Vidéos 360°">
-                                <label for="format_360video">Vidéos 360°</label>
+                                <label for="format_360video" id="i18n-format-360video">Vidéos 360°</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="format_360photo" name="contentFormats" value="Photos 360°">
-                                <label for="format_360photo">Photos 360°</label>
+                                <label for="format_360photo" id="i18n-format-360photo">Photos 360°</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="format_3d" name="contentFormats" value="Animations ou schémas 3D">
-                                <label for="format_3d">Animations ou schémas 3D</label>
+                                <label for="format_3d" id="i18n-format-3d">Animations ou schémas 3D</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="format_visuals" name="contentFormats" value="Visuels (tableaux, graphiques, infographies)">
-                                <label for="format_visuals">Visuels (tableaux, graphiques, infographies)</label>
+                                <label for="format_visuals" id="i18n-format-visuals">Visuels (tableaux, graphiques, infographies)</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="format_audio" name="contentFormats" value="Audio / voix off">
-                                <label for="format_audio">Audio / voix off</label>
+                                <label for="format_audio" id="i18n-format-audio">Audio / voix off</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="format_games" name="contentFormats" value="Mini-jeux ou mécaniques gamifiées">
-                                <label for="format_games">Mini-jeux ou mécaniques gamifiées</label>
+                                <label for="format_games" id="i18n-format-games">Mini-jeux ou mécaniques gamifiées</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="format_other" name="contentFormats" value="Autre format">
-                                <label for="format_other">Autre format</label>
+                                <label for="format_other" id="i18n-format-other">Autre format</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Disposez-vous déjà de ressources à intégrer ?</label>
+                        <label id="i18n-existing-assets-label">Disposez-vous déjà de ressources à intégrer ?</label>
                         <div class="checkbox-group">
                             <div class="checkbox-item">
                                 <input type="checkbox" id="assets_photos" name="existingAssets" value="Photos / vidéos existantes">
-                                <label for="assets_photos">Photos / vidéos existantes</label>
+                                <label for="assets_photos" id="i18n-assets-photos">Photos / vidéos existantes</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="assets_technical" name="existingAssets" value="Plans, schémas ou documents techniques">
-                                <label for="assets_technical">Plans, schémas ou documents techniques</label>
+                                <label for="assets_technical" id="i18n-assets-technical">Plans, schémas ou documents techniques</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="assets_pedagogical" name="existingAssets" value="Supports pédagogiques (PDF, PPT, etc.)">
-                                <label for="assets_pedagogical">Supports pédagogiques (PDF, PPT, etc.)</label>
+                                <label for="assets_pedagogical" id="i18n-assets-pedagogical">Supports pédagogiques (PDF, PPT, etc.)</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="assets_3d" name="existingAssets" value="Modèles 3D">
-                                <label for="assets_3d">Modèles 3D</label>
+                                <label for="assets_3d" id="i18n-assets-3d">Modèles 3D</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="assets_none" name="existingAssets" value="Aucune ressource existante">
-                                <label for="assets_none">Aucune ressource existante</label>
+                                <label for="assets_none" id="i18n-assets-none">Aucune ressource existante</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="assets_other" name="existingAssets" value="Autre">
-                                <label for="assets_other">Autre</label>
+                                <label for="assets_other" id="i18n-assets-other">Autre</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Souhaitez-vous une visualisation en temps réel dans le navigateur, dans des casques VR, ou les deux ? <span class="required">*</span></label>
+                        <label id="i18n-real-time-visualization-label">Souhaitez-vous une visualisation en temps réel dans le navigateur, dans des casques VR, ou les deux ? <span class="required">*</span></label>
                         <div class="checkbox-group">
                             <div class="checkbox-item">
-                                <input type="checkbox" id="viz_browser" name="realTimeVisualizationNeed" value="Navigateur web (ordinateur ou tablette)">
-                                <label for="viz_browser">Navigateur web (ordinateur ou tablette)</label>
+                                <input type="checkbox" id="viz_browser" name="realTimeVisualizationNeed" value="Navigateur web (ordinateur ou tablette)" required>
+                                <label for="viz_browser" id="i18n-viz-browser">Navigateur web (ordinateur ou tablette)</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="viz_vr" name="realTimeVisualizationNeed" value="Casques de réalité virtuelle (par exemple : Meta Quest)">
-                                <label for="viz_vr">Casques de réalité virtuelle (par exemple : Meta Quest)</label>
+                                <label for="viz_vr" id="i18n-viz-vr">Casques de réalité virtuelle (par exemple : Meta Quest)</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="viz_both" name="realTimeVisualizationNeed" value="Les deux">
-                                <label for="viz_both">Les deux</label>
+                                <label for="viz_both" id="i18n-viz-both">Les deux</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="viz_define" name="realTimeVisualizationNeed" value="À définir">
-                                <label for="viz_define">À définir</label>
+                                <label for="viz_define" id="i18n-viz-define">À définir</label>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="domains" id="i18n-domains-label">Domaines d'expertise ou de compétence couverts par le scénario</label>
+                        <div class="multi-input-group" id="domainsGroup">
+                            <div class="multi-input-item">
+                                <input type="text" class="domain-input" placeholder="Domaine">
+                                <button type="button" onclick="removeDomain(this)" id="i18n-remove-button">Supprimer</button>
+                            </div>
+                        </div>
+                        <button type="button" class="add-button" onclick="addDomain()" id="i18n-add-domain-button">Ajouter un domaine</button>
                     </div>
                 </div>
 
                 <!-- Section 4: Évaluation et suivi -->
                 <div class="section">
-                    <h2 class="section-title">Évaluation et suivi</h2>
+                    <h2 class="section-title" id="i18n-section-4-title">Évaluation et suivi</h2>
 
                     <div class="form-group">
-                        <label>Souhaitez-vous intégrer de l'évaluation dans les modules immersifs ? <span class="required">*</span></label>
+                        <label id="i18n-assessment-need-label">Souhaitez-vous intégrer de l'évaluation dans les modules immersifs ? <span class="required">*</span></label>
                         <div class="radio-group">
                             <div class="radio-item">
                                 <input type="radio" id="assessment_simple" name="needAssessment" value="Oui, de manière simple (quiz, validation de compréhension)" onchange="toggleAssessmentFields()" required>
-                                <label for="assessment_simple">Oui, de manière simple (quiz, validation de compréhension)</label>
+                                <label for="assessment_simple" id="i18n-assessment-simple">Oui, de manière simple (quiz, validation de compréhension)</label>
                             </div>
                             <div class="radio-item">
                                 <input type="radio" id="assessment_advanced" name="needAssessment" value="Oui, de manière avancée (scoring, indicateurs, parcours évaluatifs)" onchange="toggleAssessmentFields()">
-                                <label for="assessment_advanced">Oui, de manière avancée (scoring, indicateurs, parcours évaluatifs)</label>
+                                <label for="assessment_advanced" id="i18n-assessment-advanced">Oui, de manière avancée (scoring, indicateurs, parcours évaluatifs)</label>
                             </div>
                             <div class="radio-item">
                                 <input type="radio" id="assessment_no" name="needAssessment" value="Non, usage uniquement exploratoire / démonstratif" onchange="toggleAssessmentFields()">
-                                <label for="assessment_no">Non, usage uniquement exploratoire / démonstratif</label>
+                                <label for="assessment_no" id="i18n-assessment-no">Non, usage uniquement exploratoire / démonstratif</label>
                             </div>
                             <div class="radio-item">
                                 <input type="radio" id="assessment_define" name="needAssessment" value="À définir ensemble" onchange="toggleAssessmentFields()">
-                                <label for="assessment_define">À définir ensemble</label>
+                                <label for="assessment_define" id="i18n-assessment-define">À définir ensemble</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group conditional-field" id="assessmentDetailsField">
-                        <label for="assessmentDetails">Si oui, précisez éventuellement le type d'évaluation souhaité</label>
-                        <textarea id="assessmentDetails" name="assessmentDetails"></textarea>
+                        <label for="assessmentDetails" id="i18n-assessment-details-label">Si oui, précisez éventuellement le type d'évaluation souhaité</label>
+                        <textarea id="assessmentDetails" name="assessmentDetails" placeholder="Ex: Temps de réaction, nombre d'erreurs critiques, score final."></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Disposez-vous d'une plateforme LMS pour héberger et suivre les modules ? <span class="required">*</span></label>
+                        <label id="i18n-lms-label">Disposez-vous d'une plateforme LMS pour héberger et suivre les modules ? <span class="required">*</span></label>
                         <div class="radio-group">
                             <div class="radio-item">
                                 <input type="radio" id="lms_yes" name="hasLms" value="Oui" onchange="toggleLmsFields()" required>
-                                <label for="lms_yes">Oui</label>
+                                <label for="lms_yes" id="i18n-lms-yes">Oui</label>
                             </div>
                             <div class="radio-item">
                                 <input type="radio" id="lms_unknown" name="hasLms" value="Oui, mais je ne connais pas les détails techniques" onchange="toggleLmsFields()">
-                                <label for="lms_unknown">Oui, mais je ne connais pas les détails techniques</label>
+                                <label for="lms_unknown" id="i18n-lms-unknown">Oui, mais je ne connais pas les détails techniques</label>
                             </div>
                             <div class="radio-item">
                                 <input type="radio" id="lms_no" name="hasLms" value="Non" onchange="toggleLmsFields()">
-                                <label for="lms_no">Non</label>
+                                <label for="lms_no" id="i18n-lms-no">Non</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group conditional-field" id="lmsNameField">
-                        <label for="lmsName">Nom de la plateforme LMS</label>
-                        <input type="text" id="lmsName" name="lmsName">
+                        <label for="lmsName" id="i18n-lms-name-label">Nom de la plateforme LMS</label>
+                        <input type="text" id="lmsName" name="lmsName" placeholder="Ex: Moodle, Cornerstone, 360Learning">
                     </div>
 
                     <div class="form-group">
-                        <label>Formats techniques souhaités ou envisagés</label>
+                        <label id="i18n-technical-formats-label">Formats techniques souhaités ou envisagés</label>
                         <div class="checkbox-group">
                             <div class="checkbox-item">
                                 <input type="checkbox" id="format_scorm" name="technicalFormats" value="SCORM">
-                                <label for="format_scorm">SCORM</label>
+                                <label for="format_scorm" id="i18n-format-scorm">SCORM</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="format_lti" name="technicalFormats" value="LTI 1.3">
-                                <label for="format_lti">LTI 1.3</label>
+                                <label for="format_lti" id="i18n-format-lti">LTI 1.3</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="format_web" name="technicalFormats" value="Lien web simple">
-                                <label for="format_web">Lien web simple</label>
+                                <label for="format_web" id="i18n-format-web">Lien web simple</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="format_xapi" name="technicalFormats" value="xAPI / CMI5 (à étudier)">
-                                <label for="format_xapi">xAPI / CMI5 (à étudier)</label>
+                                <label for="format_xapi" id="i18n-format-xapi">xAPI / CMI5 (à étudier)</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="format_tech_define" name="technicalFormats" value="À définir ensemble">
-                                <label for="format_tech_define">À définir ensemble</label>
+                                <label for="format_tech_define" id="i18n-format-tech-define">À définir ensemble</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Quels types de données de suivi vous intéressent ?</label>
+                        <label id="i18n-tracking-needs-label">Besoins de suivi et de traçabilité des données</label>
                         <div class="checkbox-group">
                             <div class="checkbox-item">
                                 <input type="checkbox" id="tracking_time" name="trackingNeeds" value="Temps passé">
-                                <label for="tracking_time">Temps passé</label>
+                                <label for="tracking_time" id="i18n-tracking-time">Temps passé</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="tracking_completion" name="trackingNeeds" value="Taux de complétion">
-                                <label for="tracking_completion">Taux de complétion</label>
+                                <label for="tracking_completion" id="i18n-tracking-completion">Taux de complétion</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="tracking_scores" name="trackingNeeds" value="Scores / résultats">
-                                <label for="tracking_scores">Scores / résultats</label>
+                                <label for="tracking_scores" id="i18n-tracking-scores">Scores / résultats</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="tracking_interactions" name="trackingNeeds" value="Interactions réalisées (clics, choix, parcours)">
-                                <label for="tracking_interactions">Interactions réalisées (clics, choix, parcours)</label>
+                                <label for="tracking_interactions" id="i18n-tracking-interactions">Interactions réalisées (clics, choix, parcours)</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="tracking_export" name="trackingNeeds" value="Export de données (CSV, rapport enseignant / manager)">
-                                <label for="tracking_export">Export de données (CSV, rapport enseignant / manager)</label>
+                                <label for="tracking_export" id="i18n-tracking-export">Export de données (CSV, rapport enseignant / manager)</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="tracking_none" name="trackingNeeds" value="Aucun besoin particulier">
-                                <label for="tracking_none">Aucun besoin particulier</label>
+                                <label for="tracking_none" id="i18n-tracking-none">Aucun besoin particulier</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="tracking_define" name="trackingNeeds" value="À définir ensemble">
-                                <label for="tracking_define">À définir ensemble</label>
+                                <label for="tracking_define" id="i18n-tracking-define">À définir ensemble</label>
                             </div>
                         </div>
                     </div>
@@ -707,67 +697,67 @@
 
                 <!-- Section 5: Matériel et contexte -->
                 <div class="section">
-                    <h2 class="section-title">Matériel et contexte d'utilisation</h2>
+                    <h2 class="section-title" id="i18n-section-5-title">Matériel et contexte d'utilisation</h2>
 
                     <div class="form-group">
-                        <label>Dans quels contextes les modules seront-ils principaux utilisés ?</label>
+                        <label id="i18n-usage-contexts-label">Dans quels contextes les modules seront-ils principaux utilisés ?</label>
                         <div class="checkbox-group">
                             <div class="checkbox-item">
                                 <input type="checkbox" id="context_classroom" name="usageContexts" value="Salle de cours / formation présentielle">
-                                <label for="context_classroom">Salle de cours / formation présentielle</label>
+                                <label for="context_classroom" id="i18n-context-classroom">Salle de cours / formation présentielle</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="context_lab" name="usageContexts" value="Salle informatique ou laboratoire">
-                                <label for="context_lab">Salle informatique ou laboratoire</label>
+                                <label for="context_lab" id="i18n-context-lab">Salle informatique ou laboratoire</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="context_individual" name="usageContexts" value="Utilisation individuelle (ordinateur ou casque dédié)">
-                                <label for="context_individual">Utilisation individuelle (ordinateur ou casque dédié)</label>
+                                <label for="context_individual" id="i18n-context-individual">Utilisation individuelle (ordinateur ou casque dédié)</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="context_events" name="usageContexts" value="Événements, salons, journées portes ouvertes">
-                                <label for="context_events">Événements, salons, journées portes ouvertes</label>
+                                <label for="context_events" id="i18n-context-events">Événements, salons, journées portes ouvertes</label>
                             </div>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="context_other" name="usageContexts" value="Autre">
-                                <label for="context_other">Autre</label>
+                                <label for="context_other" id="i18n-context-other">Autre</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Disposez-vous déjà de casques ou lunettes de réalité virtuelle ? <span class="required">*</span></label>
+                        <label id="i18n-has-vr-headsets-label">Disposez-vous déjà de casques ou lunettes de réalité virtuelle ? <span class="required">*</span></label>
                         <div class="radio-group">
                             <div class="radio-item">
                                 <input type="radio" id="vr_yes" name="hasVrHeadsets" value="Oui" onchange="toggleVrFields()" required>
-                                <label for="vr_yes">Oui</label>
+                                <label for="vr_yes" id="i18n-vr-yes">Oui</label>
                             </div>
                             <div class="radio-item">
                                 <input type="radio" id="vr_no" name="hasVrHeadsets" value="Non" onchange="toggleVrFields()">
-                                <label for="vr_no">Non</label>
+                                <label for="vr_no" id="i18n-vr-no">Non</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group conditional-field" id="vrHeadsetsDetailsField">
-                        <label for="vrHeadsetsDetails">Si oui, indiquez les modèles et quantités approximatives</label>
-                        <textarea id="vrHeadsetsDetails" name="vrHeadsetsDetails"></textarea>
+                        <label for="vrHeadsetsDetails" id="i18n-vr-headsets-details-label">Si oui, indiquez les modèles et quantités approximatives</label>
+                        <textarea id="vrHeadsetsDetails" name="vrHeadsetsDetails" placeholder="Ex: 10x Meta Quest 2, 5x Pico 4"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Souhaitez-vous une recommandation pour le matériel ?</label>
+                        <label id="i18n-hardware-advice-label">Souhaitez-vous une recommandation pour le matériel ?</label>
                         <div class="radio-group">
                             <div class="radio-item">
                                 <input type="radio" id="hardware_yes" name="needHardwareAdvice" value="Oui">
-                                <label for="hardware_yes">Oui</label>
+                                <label for="hardware_yes" id="i18n-hardware-yes">Oui</label>
                             </div>
                             <div class="radio-item">
                                 <input type="radio" id="hardware_no" name="needHardwareAdvice" value="Non">
-                                <label for="hardware_no">Non</label>
+                                <label for="hardware_no" id="i18n-hardware-no">Non</label>
                             </div>
                             <div class="radio-item">
                                 <input type="radio" id="hardware_discuss" name="needHardwareAdvice" value="À discuter">
-                                <label for="hardware_discuss">À discuter</label>
+                                <label for="hardware_discuss" id="i18n-hardware-discuss">À discuter</label>
                             </div>
                         </div>
                     </div>
@@ -775,236 +765,837 @@
 
                 <!-- Section 6: Planning et budget -->
                 <div class="section">
-                    <h2 class="section-title">Planning et budget</h2>
+                    <h2 class="section-title" id="i18n-section-6-title">Planning et budget</h2>
 
                     <div class="form-group">
-                        <label>Horizon souhaité pour la mise en place des premiers modules <span class="required">*</span></label>
+                        <label id="i18n-desired-start-label">Horizon souhaité pour la mise en place des premiers modules <span class="required">*</span></label>
                         <div class="radio-group">
                             <div class="radio-item">
                                 <input type="radio" id="timeline_3months" name="desiredStart" value="Moins de 3 mois" required>
-                                <label for="timeline_3months">Moins de 3 mois</label>
+                                <label for="timeline_3months" id="i18n-timeline-3months">Moins de 3 mois</label>
                             </div>
                             <div class="radio-item">
                                 <input type="radio" id="timeline_6months" name="desiredStart" value="Entre 3 et 6 mois">
-                                <label for="timeline_6months">Entre 3 et 6 mois</label>
+                                <label for="timeline_6months" id="i18n-timeline-6months">Entre 3 et 6 mois</label>
                             </div>
                             <div class="radio-item">
                                 <input type="radio" id="timeline_6plus" name="desiredStart" value="Plus de 6 mois">
-                                <label for="timeline_6plus">Plus de 6 mois</label>
+                                <label for="timeline_6plus" id="i18n-timeline-6plus">Plus de 6 mois</label>
                             </div>
                             <div class="radio-item">
                                 <input type="radio" id="timeline_flexible" name="desiredStart" value="Flexible">
-                                <label for="timeline_flexible">Flexible</label>
+                                <label for="timeline_flexible" id="i18n-timeline-flexible">Flexible</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Fourchette budgétaire indicative (facultatif)</label>
+                        <label id="i18n-budget-range-label">Fourchette budgétaire indicative (facultatif)</label>
                         <div class="radio-group">
                             <div class="radio-item">
                                 <input type="radio" id="budget_10k" name="budgetRange" value="Moins de 10 000 €">
-                                <label for="budget_10k">Moins de 10 000 €</label>
+                                <label for="budget_10k" id="i18n-budget-10k">Moins de 10 000 €</label>
                             </div>
                             <div class="radio-item">
                                 <input type="radio" id="budget_30k" name="budgetRange" value="Entre 10 000 € et 30 000 €">
-                                <label for="budget_30k">Entre 10 000 € et 30 000 €</label>
+                                <label for="budget_30k" id="i18n-budget-30k">Entre 10 000 € et 30 000 €</label>
                             </div>
                             <div class="radio-item">
                                 <input type="radio" id="budget_60k" name="budgetRange" value="Entre 30 000 € et 60 000 €">
-                                <label for="budget_60k">Entre 30 000 € et 60 000 €</label>
+                                <label for="budget_60k" id="i18n-budget-60k">Entre 30 000 € et 60 000 €</label>
                             </div>
                             <div class="radio-item">
                                 <input type="radio" id="budget_60plus" name="budgetRange" value="Plus de 60 000 €">
-                                <label for="budget_60plus">Plus de 60 000 €</label>
+                                <label for="budget_60plus" id="i18n-budget-60plus">Plus de 60 000 €</label>
                             </div>
                             <div class="radio-item">
                                 <input type="radio" id="budget_confidential" name="budgetRange" value="Non communiqué">
-                                <label for="budget_confidential">Non communiqué</label>
+                                <label for="budget_confidential" id="i18n-budget-confidential">Non communiqué</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="constraints">Contraintes particulières, remarques ou informations complémentaires</label>
+                        <label for="constraints" id="i18n-constraints-label">Contraintes particulières, remarques ou informations complémentaires</label>
                         <textarea id="constraints" name="constraints"></textarea>
                     </div>
                 </div>
 
                 <!-- Form Actions -->
                 <div class="form-actions">
-                    <button type="submit">Envoyer ma réponse</button>
-                    <button type="reset">Réinitialiser</button>
+                    <button type="submit" id="i18n-submit-button">Envoyer ma réponse</button>
+                    <button type="reset" id="i18n-reset-button">Réinitialiser</button>
                 </div>
             </form>
         </div>
     </div>
 
-<script>
-    // URL de ton Google Apps Script Web App
-    const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyCnb5lNTXlv2udD9bF7rJmK-KF9PlIGhpwhE4mxFGuf0CH_sBqPtOG6THD-Q5m0VEL/exec';
+    <script>
+        // URL de ton Google Apps Script Web App (URL originale conservée)
+        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyCnb5lNTXlv2udD9bF7rJmK-KF9PlIGhpwhE4mxFGuf0CH_sBqPtOG6THD-Q5m0VEL/exec';
 
-    // Helpers pour champs conditionnels
-    function toggleFrameworkFields() {
-        const value = document.querySelector('input[name="hasPedagogicalFramework"]:checked')?.value;
-        const nameField = document.getElementById('frameworkNameField');
-        const detailsField = document.getElementById('frameworkDetailsField');
-        if (value && value.includes('Oui')) {
-            nameField.classList.add('show');
-            detailsField.classList.add('show');
-        } else {
-            nameField.classList.remove('show');
-            detailsField.classList.remove('show');
-        }
-    }
+        // --- Dictionnaire de traduction ---
+        const translations = {
+            'fr': {
+                'page-title': 'Préparer votre projet immersif',
+                'header-title': 'Préparer votre projet immersif',
+                'header-subtitle': 'Ce questionnaire permet de mieux comprendre votre contexte et vos besoins afin de proposer une solution immersive adaptée : contenus 3D/360°, scénarios interactifs, casques/lunettes, intégration LMS, suivi pédagogique.',
+                'success-message': 'Votre réponse a été envoyée avec succès !',
+                'error-message': 'Une erreur s\'est produite. Veuillez réessayer.',
+                'loading-message': 'Envoi en cours...',
+                'section-1-title': 'Informations générales',
+                'organisation-label': 'Nom de l\'organisation',
+                'organisation-type-label': 'Type d\'organisation',
+                'select-default': '-- Sélectionner --',
+                'org-type-education': 'Établissement d\'enseignement',
+                'org-type-training': 'Centre de formation',
+                'org-type-company': 'Entreprise',
+                'org-type-public': 'Collectivité / administration',
+                'org-type-other': 'Autre',
+                'contact-name-label': 'Nom et prénom du contact principal',
+                'contact-role-label': 'Fonction / rôle',
+                'contact-email-label': 'Adresse e-mail',
+                'contact-phone-label': 'Numéro de téléphone',
+                'section-2-title': 'Contexte du projet',
+                'project-title-label': 'Titre du projet (si existant)',
+                'project-goal-label': 'Objectif principal du projet immersif',
+                'project-goal-help': 'Ex: Réduire les erreurs de manipulation, former à une procédure dangereuse, améliorer la mémorisation, etc.',
+                'audience-label': 'Public concerné',
+                'audience-students': 'Étudiants / Élèves',
+                'audience-employees': 'Employés / Collaborateurs',
+                'audience-clients': 'Clients / Partenaires',
+                'audience-other': 'Autre (préciser)',
+                'number-of-users-label': 'Nombre estimé d\'utilisateurs par an',
+                'target-date-label': 'Date de mise en œuvre souhaitée',
+                'framework-label': 'Disposez-vous d\'un référentiel pédagogique ou d\'un cahier des charges ?',
+                'framework-yes-complete': 'Oui, complet',
+                'framework-yes-draft': 'Oui, en cours de rédaction',
+                'framework-no': 'Non',
+                'framework-name-label': 'Nom du référentiel / cahier des charges',
+                'framework-details-label': 'Détails sur les compétences visées',
+                'section-3-title': 'Contenu et scénario',
+                'content-nature-label': 'Nature du contenu immersif',
+                'select-default-2': '-- Sélectionner --',
+                'content-nature-3d': 'Scénario interactif 3D (environnement virtuel)',
+                'content-nature-360': 'Vidéo 360° interactive',
+                'content-nature-virtual-tour': 'Visite virtuelle (photos/vidéos 360°)',
+                'content-nature-other': 'Autre',
+                'content-formats-label': 'Formats de contenus souhaités',
+                'format-360video': 'Vidéos 360°',
+                'format-360photo': 'Photos 360°',
+                'format-3d': 'Animations ou schémas 3D',
+                'format-visuals': 'Visuels (tableaux, graphiques, infographies)',
+                'format-audio': 'Audio / voix off',
+                'format-games': 'Mini-jeux ou mécaniques gamifiées',
+                'format-other': 'Autre format',
+                'existing-assets-label': 'Disposez-vous déjà de ressources à intégrer ?',
+                'assets-photos': 'Photos / vidéos existantes',
+                'assets-technical': 'Plans, schémas ou documents techniques',
+                'assets-pedagogical': 'Supports pédagogiques (PDF, PPT, etc.)',
+                'assets-3d': 'Modèles 3D',
+                'assets-none': 'Aucune ressource existante',
+                'assets-other': 'Autre',
+                'real-time-visualization-label': 'Souhaitez-vous une visualisation en temps réel dans le navigateur, dans des casques VR, ou les deux ?',
+                'viz-browser': 'Navigateur web (ordinateur ou tablette)',
+                'viz-vr': 'Casques de réalité virtuelle (par exemple : Meta Quest)',
+                'viz-both': 'Les deux',
+                'viz-define': 'À définir',
+                'domains-label': 'Domaines d\'expertise ou de compétence couverts par le scénario',
+                'remove-button': 'Supprimer',
+                'add-domain-button': 'Ajouter un domaine',
+                'section-4-title': 'Évaluation et suivi',
+                'assessment-need-label': 'Souhaitez-vous intégrer de l\'évaluation dans les modules immersifs ?',
+                'assessment-simple': 'Oui, de manière simple (quiz, validation de compréhension)',
+                'assessment-advanced': 'Oui, de manière avancée (scoring, indicateurs, parcours évaluatifs)',
+                'assessment-no': 'Non, usage uniquement exploratoire / démonstratif',
+                'assessment-define': 'À définir ensemble',
+                'assessment-details-label': 'Si oui, précisez éventuellement le type d\'évaluation souhaité',
+                'lms-label': 'Disposez-vous d\'une plateforme LMS pour héberger et suivre les modules ?',
+                'lms-yes': 'Oui',
+                'lms-unknown': 'Oui, mais je ne connais pas les détails techniques',
+                'lms-no': 'Non',
+                'lms-name-label': 'Nom de la plateforme LMS',
+                'technical-formats-label': 'Formats techniques souhaités ou envisagés',
+                'format-scorm': 'SCORM',
+                'format-lti': 'LTI 1.3',
+                'format-web': 'Lien web simple',
+                'format-xapi': 'xAPI / CMI5 (à étudier)',
+                'format-tech-define': 'À définir ensemble',
+                'tracking-needs-label': 'Besoins de suivi et de traçabilité des données',
+                'tracking-time': 'Temps passé',
+                'tracking-completion': 'Taux de complétion',
+                'tracking-scores': 'Scores / résultats',
+                'tracking-interactions': 'Interactions réalisées (clics, choix, parcours)',
+                'tracking-export': 'Export de données (CSV, rapport enseignant / manager)',
+                'tracking-none': 'Aucun besoin particulier',
+                'tracking-define': 'À définir ensemble',
+                'section-5-title': 'Matériel et contexte d\'utilisation',
+                'usage-contexts-label': 'Dans quels contextes les modules seront-ils principaux utilisés ?',
+                'context-classroom': 'Salle de cours / formation présentielle',
+                'context-lab': 'Salle informatique ou laboratoire',
+                'context-individual': 'Utilisation individuelle (ordinateur ou casque dédié)',
+                'context-events': 'Événements, salons, journées portes ouvertes',
+                'context-other': 'Autre',
+                'has-vr-headsets-label': 'Disposez-vous déjà de casques ou lunettes de réalité virtuelle ?',
+                'vr-yes': 'Oui',
+                'vr-no': 'Non',
+                'vr-headsets-details-label': 'Si oui, indiquez les modèles et quantités approximatives',
+                'hardware-advice-label': 'Souhaitez-vous une recommandation pour le matériel ?',
+                'hardware-yes': 'Oui',
+                'hardware-no': 'Non',
+                'hardware-discuss': 'À discuter',
+                'section-6-title': 'Planning et budget',
+                'desired-start-label': 'Horizon souhaité pour la mise en place des premiers modules',
+                'timeline-3months': 'Moins de 3 mois',
+                'timeline-6months': 'Entre 3 et 6 mois',
+                'timeline-6plus': 'Plus de 6 mois',
+                'timeline-flexible': 'Flexible',
+                'budget-range-label': 'Fourchette budgétaire indicative (facultatif)',
+                'budget-10k': 'Moins de 10 000 €',
+                'budget-30k': 'Entre 10 000 € et 30 000 €',
+                'budget-60k': 'Entre 30 000 € et 60 000 €',
+                'budget-60plus': 'Plus de 60 000 €',
+                'budget-confidential': 'Non communiqué',
+                'constraints-label': 'Contraintes particulières, remarques ou informations complémentaires',
+                'reset-button': 'Réinitialiser',
+                'submit-button': 'Envoyer ma réponse',
+                // Validation messages
+                'alert-audience': 'Veuillez sélectionner au moins un type de public concerné.',
+                'alert-visualization': 'Veuillez sélectionner au moins une option de visualisation (navigateur, casques VR, etc.).',
+                // Placeholders
+                'domain-placeholder': 'Domaine',
+                'vr-headsets-placeholder': 'Ex: 10x Meta Quest 2, 5x Pico 4',
+                'lms-name-placeholder': 'Ex: Moodle, Cornerstone, 360Learning',
+                'assessment-details-placeholder': 'Ex: Temps de réaction, nombre d\'erreurs critiques, score final.',
+                'target-date-placeholder': 'Ex: Q3 2024, Janvier 2025',
+            },
+            'en': {
+                'page-title': 'Prepare Your Immersive Project',
+                'header-title': 'Prepare Your Immersive Project',
+                'header-subtitle': 'This questionnaire helps us better understand your context and needs to propose a suitable immersive solution: 3D/360° content, interactive scenarios, headsets/glasses, LMS integration, pedagogical tracking.',
+                'success-message': 'Your response has been sent successfully!',
+                'error-message': 'An error occurred. Please try again.',
+                'loading-message': 'Sending...',
+                'section-1-title': 'General Information',
+                'organisation-label': 'Organization Name',
+                'organisation-type-label': 'Organization Type',
+                'select-default': '-- Select --',
+                'org-type-education': 'Educational Institution',
+                'org-type-training': 'Training Center',
+                'org-type-company': 'Company',
+                'org-type-public': 'Local Authority / Administration',
+                'org-type-other': 'Other',
+                'contact-name-label': 'Main Contact Name and Surname',
+                'contact-role-label': 'Function / Role',
+                'contact-email-label': 'Email Address',
+                'contact-phone-label': 'Phone Number',
+                'section-2-title': 'Project Context',
+                'project-title-label': 'Project Title (if existing)',
+                'project-goal-label': 'Main Goal of the Immersive Project',
+                'project-goal-help': 'Ex: Reduce handling errors, train for a dangerous procedure, improve memorization, etc.',
+                'audience-label': 'Target Audience',
+                'audience-students': 'Students / Pupils',
+                'audience-employees': 'Employees / Collaborators',
+                'audience-clients': 'Clients / Partners',
+                'audience-other': 'Other (specify)',
+                'number-of-users-label': 'Estimated Number of Users per Year',
+                'target-date-label': 'Desired Implementation Date',
+                'framework-label': 'Do you have a pedagogical framework or specifications?',
+                'framework-yes-complete': 'Yes, complete',
+                'framework-yes-draft': 'Yes, in draft',
+                'framework-no': 'No',
+                'framework-name-label': 'Name of the framework / specifications',
+                'framework-details-label': 'Details on the targeted skills',
+                'section-3-title': 'Content and Scenario',
+                'content-nature-label': 'Nature of Immersive Content',
+                'select-default-2': '-- Select --',
+                'content-nature-3d': 'Interactive 3D Scenario (virtual environment)',
+                'content-nature-360': 'Interactive 360° Video',
+                'content-nature-virtual-tour': 'Virtual Tour (360° photos/videos)',
+                'content-nature-other': 'Other',
+                'content-formats-label': 'Desired Content Formats',
+                'format-360video': '360° Videos',
+                'format-360photo': '360° Photos',
+                'format-3d': '3D Animations or diagrams',
+                'format-visuals': 'Visuals (tables, graphs, infographics)',
+                'format-audio': 'Audio / voice-over',
+                'format-games': 'Mini-games or gamified mechanics',
+                'format-other': 'Other format',
+                'existing-assets-label': 'Do you already have resources to integrate?',
+                'assets-photos': 'Existing photos / videos',
+                'assets-technical': 'Plans, diagrams, or technical documents',
+                'assets-pedagogical': 'Pedagogical supports (PDF, PPT, etc.)',
+                'assets-3d': '3D Models',
+                'assets-none': 'No existing resources',
+                'assets-other': 'Other',
+                'real-time-visualization-label': 'Do you want real-time visualization in the browser, in VR headsets, or both?',
+                'viz-browser': 'Web browser (computer or tablet)',
+                'viz-vr': 'Virtual Reality Headsets (e.g.: Meta Quest)',
+                'viz-both': 'Both',
+                'viz-define': 'To be defined',
+                'domains-label': 'Areas of Expertise or Competence covered by the scenario',
+                'remove-button': 'Remove',
+                'add-domain-button': 'Add a domain',
+                'section-4-title': 'Assessment and Tracking',
+                'assessment-need-label': 'Do you want to integrate assessment into the immersive modules?',
+                'assessment-simple': 'Yes, simply (quiz, comprehension validation)',
+                'assessment-advanced': 'Yes, advanced (scoring, indicators, evaluative paths)',
+                'assessment-no': 'No, purely exploratory / demonstrative use',
+                'assessment-define': 'To be defined together',
+                'assessment-details-label': 'If yes, specify the desired type of assessment',
+                'lms-label': 'Do you have an LMS platform to host and track the modules?',
+                'lms-yes': 'Yes',
+                'lms-unknown': 'Yes, but I don\'t know the technical details',
+                'lms-no': 'No',
+                'lms-name-label': 'Name of the LMS platform',
+                'technical-formats-label': 'Desired or envisaged technical formats',
+                'format-scorm': 'SCORM',
+                'format-lti': 'LTI 1.3',
+                'format-web': 'Simple web link',
+                'format-xapi': 'xAPI / CMI5 (to be studied)',
+                'format-tech-define': 'To be defined together',
+                'tracking-needs-label': 'Data tracking and traceability needs',
+                'tracking-time': 'Time spent',
+                'tracking-completion': 'Completion rate',
+                'tracking-scores': 'Scores / results',
+                'tracking-interactions': 'Interactions performed (clicks, choices, paths)',
+                'tracking-export': 'Data export (CSV, teacher / manager report)',
+                'tracking-none': 'No specific need',
+                'tracking-define': 'To be defined together',
+                'section-5-title': 'Hardware and Usage Context',
+                'usage-contexts-label': 'In which contexts will the modules be mainly used?',
+                'context-classroom': 'Classroom / face-to-face training',
+                'context-lab': 'Computer room or laboratory',
+                'context-individual': 'Individual use (dedicated computer or headset)',
+                'context-events': 'Events, trade shows, open days',
+                'context-other': 'Other',
+                'has-vr-headsets-label': 'Do you already have virtual reality headsets or glasses?',
+                'vr-yes': 'Yes',
+                'vr-no': 'No',
+                'vr-headsets-details-label': 'If yes, indicate the models and approximate quantities',
+                'hardware-advice-label': 'Do you want a hardware recommendation?',
+                'hardware-yes': 'Yes',
+                'hardware-no': 'No',
+                'hardware-discuss': 'To be discussed',
+                'section-6-title': 'Planning and Budget',
+                'desired-start-label': 'Desired horizon for the implementation of the first modules',
+                'timeline-3months': 'Less than 3 months',
+                'timeline-6months': 'Between 3 and 6 months',
+                'timeline-6plus': 'More than 6 months',
+                'timeline-flexible': 'Flexible',
+                'budget-range-label': 'Indicative budget range (optional)',
+                'budget-10k': 'Less than €10,000',
+                'budget-30k': 'Between €10,000 and €30,000',
+                'budget-60k': 'Between €30,000 and €60,000',
+                'budget-60plus': 'More than €60,000',
+                'budget-confidential': 'Not communicated',
+                'constraints-label': 'Specific constraints, remarks, or additional information',
+                'reset-button': 'Reset',
+                'submit-button': 'Submit my response',
+                // Validation messages
+                'alert-audience': 'Please select at least one type of target audience.',
+                'alert-visualization': 'Please select at least one visualization option (browser, VR headsets, etc.).',
+                // Placeholders
+                'domain-placeholder': 'Domain',
+                'vr-headsets-placeholder': 'Ex: 10x Meta Quest 2, 5x Pico 4',
+                'lms-name-placeholder': 'Ex: Moodle, Cornerstone, 360Learning',
+                'assessment-details-placeholder': 'Ex: Reaction time, number of critical errors, final score.',
+                'target-date-placeholder': 'Ex: Q3 2024, January 2025',
+            },
+            'es': {
+                'page-title': 'Prepare su Proyecto Inmersivo',
+                'header-title': 'Prepare su Proyecto Inmersivo',
+                'header-subtitle': 'Este cuestionario nos ayuda a comprender mejor su contexto y necesidades para proponer una solución inmersiva adecuada: contenido 3D/360°, escenarios interactivos, cascos/gafas, integración LMS, seguimiento pedagógico.',
+                'success-message': '¡Su respuesta ha sido enviada con éxito!',
+                'error-message': 'Ocurrió un error. Por favor, inténtelo de nuevo.',
+                'loading-message': 'Enviando...',
+                'section-1-title': 'Información General',
+                'organisation-label': 'Nombre de la Organización',
+                'organisation-type-label': 'Tipo de Organización',
+                'select-default': '-- Seleccionar --',
+                'org-type-education': 'Institución Educativa',
+                'org-type-training': 'Centro de Formación',
+                'org-type-company': 'Empresa',
+                'org-type-public': 'Autoridad Local / Administración',
+                'org-type-other': 'Otro',
+                'contact-name-label': 'Nombre y Apellido del Contacto Principal',
+                'contact-role-label': 'Función / Rol',
+                'contact-email-label': 'Dirección de Correo Electrónico',
+                'contact-phone-label': 'Número de Teléfono',
+                'section-2-title': 'Contexto del Proyecto',
+                'project-title-label': 'Título del Proyecto (si existe)',
+                'project-goal-label': 'Objetivo Principal del Proyecto Inmersivo',
+                'project-goal-help': 'Ej: Reducir errores de manipulación, formar en un procedimiento peligroso, mejorar la memorización, etc.',
+                'audience-label': 'Público Objetivo',
+                'audience-students': 'Estudiantes / Alumnos',
+                'audience-employees': 'Empleados / Colaboradores',
+                'audience-clients': 'Clientes / Socios',
+                'audience-other': 'Otro (especificar)',
+                'number-of-users-label': 'Número Estimado de Usuarios por Año',
+                'target-date-label': 'Fecha de Implementación Deseada',
+                'framework-label': '¿Tiene un marco pedagógico o especificaciones?',
+                'framework-yes-complete': 'Sí, completo',
+                'framework-yes-draft': 'Sí, en borrador',
+                'framework-no': 'No',
+                'framework-name-label': 'Nombre del marco / especificaciones',
+                'framework-details-label': 'Detalles sobre las habilidades objetivo',
+                'section-3-title': 'Contenido y Escenario',
+                'content-nature-label': 'Naturaleza del Contenido Inmersivo',
+                'select-default-2': '-- Seleccionar --',
+                'content-nature-3d': 'Escenario Interactivo 3D (entorno virtual)',
+                'content-nature-360': 'Video 360° Interactivo',
+                'content-nature-virtual-tour': 'Visita Virtual (fotos/videos 360°)',
+                'content-nature-other': 'Otro',
+                'content-formats-label': 'Formatos de Contenido Deseados',
+                'format-360video': 'Videos 360°',
+                'format-360photo': 'Fotos 360°',
+                'format-3d': 'Animaciones o diagramas 3D',
+                'format-visuals': 'Visuales (tablas, gráficos, infografías)',
+                'format-audio': 'Audio / voz en off',
+                'format-games': 'Minijuegos o mecánicas gamificadas',
+                'format-other': 'Otro formato',
+                'existing-assets-label': '¿Ya tiene recursos para integrar?',
+                'assets-photos': 'Fotos / videos existentes',
+                'assets-technical': 'Planos, diagramas o documentos técnicos',
+                'assets-pedagogical': 'Soportes pedagógicos (PDF, PPT, etc.)',
+                'assets-3d': 'Modelos 3D',
+                'assets-none': 'Ningún recurso existente',
+                'assets-other': 'Otro',
+                'real-time-visualization-label': '¿Desea visualización en tiempo real en el navegador, en cascos de RV, o ambos?',
+                'viz-browser': 'Navegador web (ordenador o tableta)',
+                'viz-vr': 'Cascos de Realidad Virtual (por ejemplo: Meta Quest)',
+                'viz-both': 'Ambos',
+                'viz-define': 'A definir',
+                'domains-label': 'Áreas de Experiencia o Competencia cubiertas por el escenario',
+                'remove-button': 'Eliminar',
+                'add-domain-button': 'Añadir un dominio',
+                'section-4-title': 'Evaluación y Seguimiento',
+                'assessment-need-label': '¿Desea integrar la evaluación en los módulos inmersivos?',
+                'assessment-simple': 'Sí, de forma sencilla (cuestionario, validación de comprensión)',
+                'assessment-advanced': 'Sí, de forma avanzada (puntuación, indicadores, rutas evaluativas)',
+                'assessment-no': 'No, uso puramente exploratorio / demostrativo',
+                'assessment-define': 'A definir juntos',
+                'assessment-details-label': 'Si es así, especifique el tipo de evaluación deseada',
+                'lms-label': '¿Tiene una plataforma LMS para alojar y seguir los módulos?',
+                'lms-yes': 'Sí',
+                'lms-unknown': 'Sí, pero no conozco los detalles técnicos',
+                'lms-no': 'No',
+                'lms-name-label': 'Nombre de la plataforma LMS',
+                'technical-formats-label': 'Formatos técnicos deseados o previstos',
+                'format-scorm': 'SCORM',
+                'format-lti': 'LTI 1.3',
+                'format-web': 'Enlace web simple',
+                'format-xapi': 'xAPI / CMI5 (a estudiar)',
+                'format-tech-define': 'A definir juntos',
+                'tracking-needs-label': 'Necesidades de seguimiento y trazabilidad de datos',
+                'tracking-time': 'Tiempo dedicado',
+                'tracking-completion': 'Tasa de finalización',
+                'tracking-scores': 'Puntuaciones / resultados',
+                'tracking-interactions': 'Interacciones realizadas (clics, elecciones, rutas)',
+                'tracking-export': 'Exportación de datos (CSV, informe de profesor / gerente)',
+                'tracking-none': 'Ninguna necesidad particular',
+                'tracking-define': 'A definir juntos',
+                'section-5-title': 'Hardware y Contexto de Uso',
+                'usage-contexts-label': '¿En qué contextos se utilizarán principalmente los módulos?',
+                'context-classroom': 'Aula / formación presencial',
+                'context-lab': 'Sala de informática o laboratorio',
+                'context-individual': 'Uso individual (ordenador o casco dedicado)',
+                'context-events': 'Eventos, ferias, jornadas de puertas abiertas',
+                'context-other': 'Otro',
+                'has-vr-headsets-label': '¿Ya tiene cascos o gafas de realidad virtual?',
+                'vr-yes': 'Sí',
+                'vr-no': 'No',
+                'vr-headsets-details-label': 'Si es así, indique los modelos y cantidades aproximadas',
+                'hardware-advice-label': '¿Desea una recomendación de hardware?',
+                'hardware-yes': 'Sí',
+                'hardware-no': 'No',
+                'hardware-discuss': 'A discutir',
+                'section-6-title': 'Planificación y Presupuesto',
+                'desired-start-label': 'Horizonte deseado para la implementación de los primeros módulos',
+                'timeline-3months': 'Menos de 3 meses',
+                'timeline-6months': 'Entre 3 y 6 meses',
+                'timeline-6plus': 'Más de 6 meses',
+                'timeline-flexible': 'Flexible',
+                'budget-range-label': 'Rango de presupuesto indicativo (opcional)',
+                'budget-10k': 'Menos de 10.000 €',
+                'budget-30k': 'Entre 10.000 € y 30.000 €',
+                'budget-60k': 'Entre 30.000 € y 60.000 €',
+                'budget-60plus': 'Más de 60.000 €',
+                'budget-confidential': 'No comunicado',
+                'constraints-label': 'Restricciones específicas, comentarios o información adicional',
+                'reset-button': 'Restablecer',
+                'submit-button': 'Enviar mi respuesta',
+                // Validation messages
+                'alert-audience': 'Por favor, seleccione al menos un tipo de público objetivo.',
+                'alert-visualization': 'Por favor, seleccione al menos una opción de visualización (navegador, cascos VR, etc.).',
+                // Placeholders
+                'domain-placeholder': 'Dominio',
+                'vr-headsets-placeholder': 'Ej: 10x Meta Quest 2, 5x Pico 4',
+                'lms-name-placeholder': 'Ej: Moodle, Cornerstone, 360Learning',
+                'assessment-details-placeholder': 'Ej: Tiempo de reacción, número de errores críticos, puntuación final.',
+                'target-date-placeholder': 'Ej: T3 2024, Enero 2025',
+            },
+            'de': {
+                'page-title': 'Vorbereitung Ihres Immersiven Projekts',
+                'header-title': 'Vorbereitung Ihres Immersiven Projekts',
+                'header-subtitle': 'Dieser Fragebogen hilft uns, Ihren Kontext und Ihre Bedürfnisse besser zu verstehen, um eine geeignete immersive Lösung vorzuschlagen: 3D/360°-Inhalte, interaktive Szenarien, Headsets/Brillen, LMS-Integration, pädagogisches Tracking.',
+                'success-message': 'Ihre Antwort wurde erfolgreich gesendet!',
+                'error-message': 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
+                'loading-message': 'Wird gesendet...',
+                'section-1-title': 'Allgemeine Informationen',
+                'organisation-label': 'Name der Organisation',
+                'organisation-type-label': 'Art der Organisation',
+                'select-default': '-- Auswählen --',
+                'org-type-education': 'Bildungseinrichtung',
+                'org-type-training': 'Schulungszentrum',
+                'org-type-company': 'Unternehmen',
+                'org-type-public': 'Kommune / Verwaltung',
+                'org-type-other': 'Andere',
+                'contact-name-label': 'Name und Vorname des Hauptansprechpartners',
+                'contact-role-label': 'Funktion / Rolle',
+                'contact-email-label': 'E-Mail-Adresse',
+                'contact-phone-label': 'Telefonnummer',
+                'section-2-title': 'Projektkontext',
+                'project-title-label': 'Projekttitel (falls vorhanden)',
+                'project-goal-label': 'Hauptziel des immersiven Projekts',
+                'project-goal-help': 'Bsp.: Reduzierung von Handhabungsfehlern, Schulung für ein gefährliches Verfahren, Verbesserung der Speicherung usw.',
+                'audience-label': 'Zielgruppe',
+                'audience-students': 'Studenten / Schüler',
+                'audience-employees': 'Mitarbeiter / Kollegen',
+                'audience-clients': 'Kunden / Partner',
+                'audience-other': 'Andere (bitte angeben)',
+                'number-of-users-label': 'Geschätzte Anzahl der Benutzer pro Jahr',
+                'target-date-label': 'Gewünschtes Umsetzungsdatum',
+                'framework-label': 'Haben Sie ein pädagogisches Rahmenwerk oder Spezifikationen?',
+                'framework-yes-complete': 'Ja, vollständig',
+                'framework-yes-draft': 'Ja, in Bearbeitung',
+                'framework-no': 'Nein',
+                'framework-name-label': 'Name des Rahmenwerks / der Spezifikationen',
+                'framework-details-label': 'Details zu den angestrebten Kompetenzen',
+                'section-3-title': 'Inhalt und Szenario',
+                'content-nature-label': 'Art des immersiven Inhalts',
+                'select-default-2': '-- Auswählen --',
+                'content-nature-3d': 'Interaktives 3D-Szenario (virtuelle Umgebung)',
+                'content-nature-360': 'Interaktives 360°-Video',
+                'content-nature-virtual-tour': 'Virtuelle Tour (360°-Fotos/Videos)',
+                'content-nature-other': 'Andere',
+                'content-formats-label': 'Gewünschte Inhaltsformate',
+                'format-360video': '360°-Videos',
+                'format-360photo': '360°-Fotos',
+                'format-3d': '3D-Animationen oder -Diagramme',
+                'format-visuals': 'Visuelle Darstellungen (Tabellen, Grafiken, Infografiken)',
+                'format-audio': 'Audio / Voice-over',
+                'format-games': 'Minispiele oder spielerische Mechaniken',
+                'format-other': 'Anderes Format',
+                'existing-assets-label': 'Haben Sie bereits zu integrierende Ressourcen?',
+                'assets-photos': 'Vorhandene Fotos / Videos',
+                'assets-technical': 'Pläne, Schemata oder technische Dokumente',
+                'assets-pedagogical': 'Pädagogische Unterstützung (PDF, PPT, etc.)',
+                'assets-3d': '3D-Modelle',
+                'assets-none': 'Keine vorhandenen Ressourcen',
+                'assets-other': 'Andere',
+                'real-time-visualization-label': 'Wünschen Sie eine Echtzeit-Visualisierung im Browser, in VR-Headsets oder beides?',
+                'viz-browser': 'Webbrowser (Computer oder Tablet)',
+                'viz-vr': 'Virtual-Reality-Headsets (z. B.: Meta Quest)',
+                'viz-both': 'Beides',
+                'viz-define': 'Zu definieren',
+                'domains-label': 'Fachgebiete oder Kompetenzbereiche, die das Szenario abdeckt',
+                'remove-button': 'Entfernen',
+                'add-domain-button': 'Domäne hinzufügen',
+                'section-4-title': 'Bewertung und Nachverfolgung',
+                'assessment-need-label': 'Möchten Sie eine Bewertung in die immersiven Module integrieren?',
+                'assessment-simple': 'Ja, einfach (Quiz, Verständnisvalidierung)',
+                'assessment-advanced': 'Ja, erweitert (Scoring, Indikatoren, Bewertungswege)',
+                'assessment-no': 'Nein, rein explorative / demonstrative Nutzung',
+                'assessment-define': 'Gemeinsam zu definieren',
+                'assessment-details-label': 'Wenn ja, geben Sie bitte die gewünschte Art der Bewertung an',
+                'lms-label': 'Haben Sie eine LMS-Plattform zum Hosten und Verfolgen der Module?',
+                'lms-yes': 'Ja',
+                'lms-unknown': 'Ja, aber ich kenne die technischen Details nicht',
+                'lms-no': 'Nein',
+                'lms-name-label': 'Name der LMS-Plattform',
+                'technical-formats-label': 'Gewünschte oder in Betracht gezogene technische Formate',
+                'format-scorm': 'SCORM',
+                'format-lti': 'LTI 1.3',
+                'format-web': 'Einfacher Weblink',
+                'format-xapi': 'xAPI / CMI5 (zu prüfen)',
+                'format-tech-define': 'Gemeinsam zu definieren',
+                'tracking-needs-label': 'Bedarf an Datenverfolgung und Rückverfolgbarkeit',
+                'tracking-time': 'Verbrachte Zeit',
+                'tracking-completion': 'Abschlussrate',
+                'tracking-scores': 'Ergebnisse / Resultate',
+                'tracking-interactions': 'Durchgeführte Interaktionen (Klicks, Auswahl, Pfade)',
+                'tracking-export': 'Datenexport (CSV, Lehrer- / Managerbericht)',
+                'tracking-none': 'Kein spezifischer Bedarf',
+                'tracking-define': 'Gemeinsam zu definieren',
+                'section-5-title': 'Hardware und Nutzungskontext',
+                'usage-contexts-label': 'In welchen Kontexten werden die Module hauptsächlich verwendet?',
+                'context-classroom': 'Klassenzimmer / Präsenzschulung',
+                'context-lab': 'Computerraum oder Labor',
+                'context-individual': 'Individuelle Nutzung (dedizierter Computer oder Headset)',
+                'context-events': 'Veranstaltungen, Messen, Tage der offenen Tür',
+                'context-other': 'Andere',
+                'has-vr-headsets-label': 'Haben Sie bereits Virtual-Reality-Headsets oder -Brillen?',
+                'vr-yes': 'Ja',
+                'vr-no': 'Nein',
+                'vr-headsets-details-label': 'Wenn ja, geben Sie bitte die Modelle und ungefähren Mengen an',
+                'hardware-advice-label': 'Wünschen Sie eine Hardware-Empfehlung?',
+                'hardware-yes': 'Ja',
+                'hardware-no': 'Nein',
+                'hardware-discuss': 'Zu besprechen',
+                'section-6-title': 'Planung und Budget',
+                'desired-start-label': 'Gewünschter Zeithorizont für die Implementierung der ersten Module',
+                'timeline-3months': 'Weniger als 3 Monate',
+                'timeline-6months': 'Zwischen 3 und 6 Monaten',
+                'timeline-6plus': 'Mehr als 6 Monate',
+                'timeline-flexible': 'Flexibel',
+                'budget-range-label': 'Indikativer Budgetrahmen (optional)',
+                'budget-10k': 'Weniger als 10.000 €',
+                'budget-30k': 'Zwischen 10.000 € und 30.000 €',
+                'budget-60k': 'Zwischen 30.000 € und 60.000 €',
+                'budget-60plus': 'Mehr als 60.000 €',
+                'budget-confidential': 'Nicht mitgeteilt',
+                'constraints-label': 'Spezifische Einschränkungen, Anmerkungen oder zusätzliche Informationen',
+                'reset-button': 'Zurücksetzen',
+                'submit-button': 'Meine Antwort senden',
+                // Validation messages
+                'alert-audience': 'Bitte wählen Sie mindestens eine Zielgruppe aus.',
+                'alert-visualization': 'Bitte wählen Sie mindestens eine Visualisierungsoption (Browser, VR-Headsets usw.) aus.',
+                // Placeholders
+                'domain-placeholder': 'Domäne',
+                'vr-headsets-placeholder': 'Bsp.: 10x Meta Quest 2, 5x Pico 4',
+                'lms-name-placeholder': 'Bsp.: Moodle, Cornerstone, 360Learning',
+                'assessment-details-placeholder': 'Bsp.: Reaktionszeit, Anzahl kritischer Fehler, Endergebnis.',
+                'target-date-placeholder': 'Bsp.: Q3 2024, Januar 2025',
+            }
+        };
 
-    function toggleAssessmentFields() {
-        const value = document.querySelector('input[name="needAssessment"]:checked')?.value;
-        const field = document.getElementById('assessmentDetailsField');
-        if (value && value.includes('Oui')) {
-            field.classList.add('show');
-        } else {
-            field.classList.remove('show');
-        }
-    }
+        // --- Fonctions de gestion de la langue ---
 
-    function toggleLmsFields() {
-        const value = document.querySelector('input[name="hasLms"]:checked')?.value;
-        const field = document.getElementById('lmsNameField');
-        if (value === 'Oui') {
-            field.classList.add('show');
-        } else {
-            field.classList.remove('show');
-        }
-    }
+        function setLanguage(lang) {
+            const t = translations[lang];
+            if (!t) return;
 
-    function toggleVrFields() {
-        const value = document.querySelector('input[name="hasVrHeadsets"]:checked')?.value;
-        const field = document.getElementById('vrHeadsetsDetailsField');
-        if (value === 'Oui') {
-            field.classList.add('show');
-        } else {
-            field.classList.remove('show');
-        }
-    }
+            // 1. Mettre à jour l'attribut lang de la balise HTML
+            document.documentElement.lang = lang;
 
-    // Multi-input domaines
-    function addDomain() {
-        const group = document.getElementById('domainsGroup');
-        const newItem = document.createElement('div');
-        newItem.className = 'multi-input-item';
-        newItem.innerHTML = `
-            <input type="text" placeholder="Domaine" class="domain-input">
-            <button type="button" onclick="removeDomain(this)">Supprimer</button>
-        `;
-        group.appendChild(newItem);
-    }
-
-    function removeDomain(button) {
-        button.parentElement.remove();
-    }
-
-    function hasAtLeastOneChecked(name) {
-        return document.querySelectorAll('input[name="' + name + '"]:checked').length > 0;
-    }
-
-    // Soumission du formulaire
-    document.getElementById('questionnaire').addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const form = e.target;
-        const loading = document.getElementById('loading');
-        const successMessage = document.getElementById('successMessage');
-        const errorMessage = document.getElementById('errorMessage');
-
-        successMessage.style.display = 'none';
-        errorMessage.style.display = 'none';
-
-        // Validation HTML5 de base
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
-
-        // Validation de groupes de cases à cocher
-        if (!hasAtLeastOneChecked('audience')) {
-            alert("Veuillez sélectionner au moins un type de public concerné.");
-            return;
-        }
-        if (!hasAtLeastOneChecked('realTimeVisualizationNeed')) {
-            alert("Veuillez sélectionner au moins une option de visualisation (navigateur, casques VR, etc.).");
-            return;
-        }
-
-        loading.style.display = 'block';
-
-        try {
-            const formData = new FormData(form);
-            const data = {};
-
-            // 1) D'abord, on remplit data avec tous les champs SAUF les checkboxes
-            for (const [key, value] of formData.entries()) {
-                const field = form.querySelector(`[name="${key}"]`);
-                if (field && field.type === 'checkbox') {
-                    // on ignore ici, on gère les checkboxes après
-                    continue;
+            // 2. Mettre à jour les éléments par ID
+            for (const key in t) {
+                const element = document.getElementById(`i18n-${key}`);
+                if (element) {
+                    // Pour les options de sélection, on met à jour le texte
+                    if (element.tagName === 'OPTION') {
+                        element.textContent = t[key];
+                    } 
+                    // Pour les labels et autres éléments, on met à jour le textContent
+                    else if (element.tagName !== 'INPUT' && element.tagName !== 'TEXTAREA') {
+                        // On gère le cas des labels avec span.required
+                        if (element.querySelector('.required')) {
+                            const requiredSpan = element.querySelector('.required').outerHTML;
+                            element.innerHTML = t[key] + ' ' + requiredSpan;
+                        } else {
+                            element.textContent = t[key];
+                        }
+                    }
                 }
-                data[key] = value;
             }
 
-            // 2) Ensuite, on gère proprement les groupes de checkboxes
-            const allCheckboxes = form.querySelectorAll('input[type="checkbox"]');
-            const checkboxNames = [...new Set([...allCheckboxes].map(cb => cb.name))];
+            // 3. Mettre à jour les placeholders et les boutons dynamiques
+            document.querySelectorAll('.domain-input').forEach(input => {
+                input.placeholder = t['domain-placeholder'];
+            });
+            document.getElementById('vrHeadsetsDetails').placeholder = t['vr-headsets-placeholder'];
+            document.getElementById('lmsName').placeholder = t['lms-name-placeholder'];
+            document.getElementById('assessmentDetails').placeholder = t['assessment-details-placeholder'];
+            document.getElementById('targetDate').placeholder = t['target-date-placeholder'];
+            
+            // Mettre à jour le texte des boutons "Supprimer" dynamiques
+            document.querySelectorAll('.multi-input-item button').forEach(button => {
+                button.textContent = t['remove-button'];
+            });
+        }
 
-            checkboxNames.forEach((name) => {
-                const checked = [...form.querySelectorAll(`input[name="${name}"]:checked`)];
-                if (checked.length === 0) return;
+        // --- Fonctions de gestion des champs conditionnels (originales) ---
 
-                if (checked.length === 1) {
-                    data[name] = checked[0].value;
-                } else {
-                    data[name] = checked.map(cb => cb.value);
+        function toggleFrameworkFields() {
+            const value = document.querySelector('input[name="hasPedagogicalFramework"]:checked')?.value;
+            const nameField = document.getElementById('frameworkNameField');
+            const detailsField = document.getElementById('frameworkDetailsField');
+            if (value && value.includes('Oui')) {
+                nameField.classList.add('show');
+                detailsField.classList.add('show');
+            } else {
+                nameField.classList.remove('show');
+                detailsField.classList.remove('show');
+            }
+        }
+
+        function toggleAssessmentFields() {
+            const value = document.querySelector('input[name="needAssessment"]:checked')?.value;
+            const field = document.getElementById('assessmentDetailsField');
+            if (value && value.includes('Oui')) {
+                field.classList.add('show');
+            } else {
+                field.classList.remove('show');
+            }
+        }
+
+        function toggleLmsFields() {
+            const value = document.querySelector('input[name="hasLms"]:checked')?.value;
+            const field = document.getElementById('lmsNameField');
+            if (value === 'Oui') {
+                field.classList.add('show');
+            } else {
+                field.classList.remove('show');
+            }
+        }
+
+        function toggleVrFields() {
+            const value = document.querySelector('input[name="hasVrHeadsets"]:checked')?.value;
+            const field = document.getElementById('vrHeadsetsDetailsField');
+            if (value === 'Oui') {
+                field.classList.add('show');
+            } else {
+                field.classList.remove('show');
+            }
+        }
+
+        // --- Fonctions de gestion des domaines (multi-input) ---
+
+        function addDomain() {
+            const group = document.getElementById('domainsGroup');
+            const newItem = document.createElement('div');
+            newItem.className = 'multi-input-item';
+            
+            const lang = document.getElementById('language-selector').value;
+            const placeholder = translations[lang]['domain-placeholder'];
+            const removeText = translations[lang]['remove-button'];
+
+            newItem.innerHTML = `
+                <input type="text" class="domain-input" placeholder="${placeholder}">
+                <button type="button" onclick="removeDomain(this)">${removeText}</button>
+            `;
+            group.appendChild(newItem);
+        }
+
+        function removeDomain(button) {
+            button.parentElement.remove();
+        }
+
+        function hasAtLeastOneChecked(name) {
+            return document.querySelectorAll('input[name="' + name + '"]:checked').length > 0;
+        }
+
+        // --- Soumission du formulaire ---
+        document.getElementById('questionnaire').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const form = e.target;
+            const loading = document.getElementById('loading');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            const lang = document.getElementById('language-selector').value;
+            const t = translations[lang];
+
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+
+            // Validation HTML5 de base
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Validation de groupes de cases à cocher (messages d'alerte traduits)
+            if (!hasAtLeastOneChecked('audience')) {
+                alert(t['alert-audience']);
+                return;
+            }
+            if (!hasAtLeastOneChecked('realTimeVisualizationNeed')) {
+                alert(t['alert-visualization']);
+                return;
+            }
+
+            loading.style.display = 'block';
+
+            try {
+                const formData = new FormData(form);
+                const data = {};
+
+                // 1) D'abord, on remplit data avec tous les champs SAUF les checkboxes
+                for (const [key, value] of formData.entries()) {
+                    const field = form.querySelector(`[name="${key}"]`);
+                    if (field && field.type === 'checkbox') {
+                        // on ignore ici, on gère les checkboxes après
+                        continue;
+                    }
+                    data[key] = value;
                 }
-            });
 
-            // 3) Domaines (multi-input)
-            const domains = Array.from(document.querySelectorAll('.domain-input'))
-                .map(input => input.value)
-                .filter(val => val.trim());
-            data.domains = domains.join('; ');
+                // 2) Ensuite, on gère proprement les groupes de checkboxes
+                const allCheckboxes = form.querySelectorAll('input[type="checkbox"]');
+                const checkboxNames = [...new Set([...allCheckboxes].map(cb => cb.name))];
 
-            // 4) Envoi vers Google Apps Script
-            await fetch(GOOGLE_APPS_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify(data)
-            });
+                checkboxNames.forEach((name) => {
+                    const checked = [...form.querySelectorAll(`input[name="${name}"]:checked`)];
+                    if (checked.length === 0) return;
 
-            loading.style.display = 'none';
-            successMessage.style.display = 'block';
-            form.reset();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+                    if (checked.length === 1) {
+                        data[name] = checked[0].value;
+                    } else {
+                        data[name] = checked.map(cb => cb.value);
+                    }
+                });
 
-            // Réinitialiser les champs conditionnels
+                // 3) Domaines (multi-input)
+                const domains = Array.from(document.querySelectorAll('.domain-input'))
+                    .map(input => input.value)
+                    .filter(val => val.trim());
+                data.domains = domains.join('; ');
+
+                // 4) Envoi vers Google Apps Script
+                await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify(data)
+                });
+
+                loading.style.display = 'none';
+                successMessage.style.display = 'block';
+                form.reset();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // Réinitialiser les champs conditionnels
+                toggleFrameworkFields();
+                toggleAssessmentFields();
+                toggleLmsFields();
+                toggleVrFields();
+
+            } catch (error) {
+                console.error('Erreur:', error);
+                loading.style.display = 'none';
+                errorMessage.style.display = 'block';
+            }
+        });
+
+        // --- Initialisation ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialiser les champs conditionnels
             toggleFrameworkFields();
             toggleAssessmentFields();
             toggleLmsFields();
             toggleVrFields();
 
-        } catch (error) {
-            console.error('Erreur:', error);
-            loading.style.display = 'none';
-            errorMessage.style.display = 'block';
-        }
-    });
+            // Définir la langue par défaut (français)
+            const defaultLang = 'fr';
+            document.getElementById('language-selector').value = defaultLang;
+            setLanguage(defaultLang);
 
-    // Init au chargement
-    document.addEventListener('DOMContentLoaded', () => {
-        toggleFrameworkFields();
-        toggleAssessmentFields();
-        toggleLmsFields();
-        toggleVrFields();
-    });
-</script>
+            // Écouteur d'événement pour le changement de langue
+            document.getElementById('language-selector').addEventListener('change', (e) => {
+                setLanguage(e.target.value);
+            });
+        });
+    </script>
 </body>
 </html>
