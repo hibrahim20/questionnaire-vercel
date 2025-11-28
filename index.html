@@ -839,157 +839,171 @@
         </div>
     </div>
 
-    <script>
-        // URL de ton Google Apps Script Web App
-        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyCnb5lNTXlv2udD9bF7rJmK-KF9PlIGhpwhE4mxFGuf0CH_sBqPtOG6THD-Q5m0VEL/exec';
+<script>
+    // URL de ton Google Apps Script Web App
+    const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyCnb5lNTXlv2udD9bF7rJmK-KF9PlIGhpwhE4mxFGuf0CH_sBqPtOG6THD-Q5m0VEL/exec';
 
-        // Toggle conditional fields
-        function toggleFrameworkFields() {
-            const value = document.querySelector('input[name="hasPedagogicalFramework"]:checked')?.value;
-            const nameField = document.getElementById('frameworkNameField');
-            const detailsField = document.getElementById('frameworkDetailsField');
-            
-            if (value && value.includes('Oui')) {
-                nameField.classList.add('show');
-                detailsField.classList.add('show');
-            } else {
-                nameField.classList.remove('show');
-                detailsField.classList.remove('show');
-            }
+    // Helpers pour champs conditionnels
+    function toggleFrameworkFields() {
+        const value = document.querySelector('input[name="hasPedagogicalFramework"]:checked')?.value;
+        const nameField = document.getElementById('frameworkNameField');
+        const detailsField = document.getElementById('frameworkDetailsField');
+        if (value && value.includes('Oui')) {
+            nameField.classList.add('show');
+            detailsField.classList.add('show');
+        } else {
+            nameField.classList.remove('show');
+            detailsField.classList.remove('show');
+        }
+    }
+
+    function toggleAssessmentFields() {
+        const value = document.querySelector('input[name="needAssessment"]:checked')?.value;
+        const field = document.getElementById('assessmentDetailsField');
+        if (value && value.includes('Oui')) {
+            field.classList.add('show');
+        } else {
+            field.classList.remove('show');
+        }
+    }
+
+    function toggleLmsFields() {
+        const value = document.querySelector('input[name="hasLms"]:checked')?.value;
+        const field = document.getElementById('lmsNameField');
+        if (value === 'Oui') {
+            field.classList.add('show');
+        } else {
+            field.classList.remove('show');
+        }
+    }
+
+    function toggleVrFields() {
+        const value = document.querySelector('input[name="hasVrHeadsets"]:checked')?.value;
+        const field = document.getElementById('vrHeadsetsDetailsField');
+        if (value === 'Oui') {
+            field.classList.add('show');
+        } else {
+            field.classList.remove('show');
+        }
+    }
+
+    // Multi-input domaines
+    function addDomain() {
+        const group = document.getElementById('domainsGroup');
+        const newItem = document.createElement('div');
+        newItem.className = 'multi-input-item';
+        newItem.innerHTML = `
+            <input type="text" placeholder="Domaine" class="domain-input">
+            <button type="button" onclick="removeDomain(this)">Supprimer</button>
+        `;
+        group.appendChild(newItem);
+    }
+
+    function removeDomain(button) {
+        button.parentElement.remove();
+    }
+
+    function hasAtLeastOneChecked(name) {
+        return document.querySelectorAll('input[name="' + name + '"]:checked').length > 0;
+    }
+
+    // Soumission du formulaire
+    document.getElementById('questionnaire').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const form = e.target;
+        const loading = document.getElementById('loading');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'none';
+
+        // Validation HTML5 de base
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
         }
 
-        function toggleAssessmentFields() {
-            const value = document.querySelector('input[name="needAssessment"]:checked')?.value;
-            const field = document.getElementById('assessmentDetailsField');
-            
-            if (value && value.includes('Oui')) {
-                field.classList.add('show');
-            } else {
-                field.classList.remove('show');
-            }
+        // Validation de groupes de cases à cocher
+        if (!hasAtLeastOneChecked('audience')) {
+            alert("Veuillez sélectionner au moins un type de public concerné.");
+            return;
+        }
+        if (!hasAtLeastOneChecked('realTimeVisualizationNeed')) {
+            alert("Veuillez sélectionner au moins une option de visualisation (navigateur, casques VR, etc.).");
+            return;
         }
 
-        function toggleLmsFields() {
-            const value = document.querySelector('input[name="hasLms"]:checked')?.value;
-            const field = document.getElementById('lmsNameField');
-            
-            if (value === 'Oui') {
-                field.classList.add('show');
-            } else {
-                field.classList.remove('show');
-            }
-        }
+        loading.style.display = 'block';
 
-        function toggleVrFields() {
-            const value = document.querySelector('input[name="hasVrHeadsets"]:checked')?.value;
-            const field = document.getElementById('vrHeadsetsDetailsField');
-            
-            if (value === 'Oui') {
-                field.classList.add('show');
-            } else {
-                field.classList.remove('show');
-            }
-        }
+        try {
+            const formData = new FormData(form);
+            const data = {};
 
-        // Multi-input for domains
-        function addDomain() {
-            const group = document.getElementById('domainsGroup');
-            const newItem = document.createElement('div');
-            newItem.className = 'multi-input-item';
-            newItem.innerHTML = `
-                <input type="text" placeholder="Domaine" class="domain-input">
-                <button type="button" onclick="removeDomain(this)">Supprimer</button>
-            `;
-            group.appendChild(newItem);
-        }
-
-        function removeDomain(button) {
-            button.parentElement.remove();
-        }
-
-        function hasAtLeastOneChecked(name) {
-            return document.querySelectorAll('input[name="' + name + '"]:checked').length > 0;
-        }
-
-        // Form submission
-        document.getElementById('questionnaire').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const form = e.target;
-            const loading = document.getElementById('loading');
-            const successMessage = document.getElementById('successMessage');
-            const errorMessage = document.getElementById('errorMessage');
-
-            successMessage.style.display = 'none';
-            errorMessage.style.display = 'none';
-
-            // Validation HTML5 de base
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return;
+            // 1) D'abord, on remplit data avec tous les champs SAUF les checkboxes
+            for (const [key, value] of formData.entries()) {
+                const field = form.querySelector(`[name="${key}"]`);
+                if (field && field.type === 'checkbox') {
+                    // on ignore ici, on gère les checkboxes après
+                    continue;
+                }
+                data[key] = value;
             }
 
-            // Validation des groupes de cases à cocher
-            if (!hasAtLeastOneChecked('audience')) {
-                alert("Veuillez sélectionner au moins un type de public concerné.");
-                return;
-            }
+            // 2) Ensuite, on gère proprement les groupes de checkboxes
+            const allCheckboxes = form.querySelectorAll('input[type="checkbox"]');
+            const checkboxNames = [...new Set([...allCheckboxes].map(cb => cb.name))];
 
-            if (!hasAtLeastOneChecked('realTimeVisualizationNeed')) {
-                alert("Veuillez sélectionner au moins une option de visualisation (navigateur, casques VR, etc.).");
-                return;
-            }
+            checkboxNames.forEach((name) => {
+                const checked = [...form.querySelectorAll(`input[name="${name}"]:checked`)];
+                if (checked.length === 0) return;
 
-            loading.style.display = 'block';
+                if (checked.length === 1) {
+                    data[name] = checked[0].value;
+                } else {
+                    data[name] = checked.map(cb => cb.value);
+                }
+            });
 
-            try {
-                const formData = new FormData(form);
-                const data = Object.fromEntries(formData);
+            // 3) Domaines (multi-input)
+            const domains = Array.from(document.querySelectorAll('.domain-input'))
+                .map(input => input.value)
+                .filter(val => val.trim());
+            data.domains = domains.join('; ');
 
-                // Checkboxes → gérer correctement les valeurs multiples
-                const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-                checkboxes.forEach(cb => {
-                    if (data[cb.name]) {
-                        data[cb.name] = Array.isArray(data[cb.name])
-                            ? [...data[cb.name], cb.value]
-                            : [data[cb.name], cb.value];
-                    } else {
-                        data[cb.name] = cb.value;
-                    }
-                });
+            // 4) Envoi vers Google Apps Script
+            await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(data)
+            });
 
-                // Domaines
-                const domains = Array.from(document.querySelectorAll('.domain-input'))
-                    .map(input => input.value)
-                    .filter(val => val.trim());
-                data.domains = domains.join('; ');
+            loading.style.display = 'none';
+            successMessage.style.display = 'block';
+            form.reset();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
 
-                // Envoi vers Google Apps Script
-                await fetch(GOOGLE_APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify(data)
-                });
-
-                loading.style.display = 'none';
-                successMessage.style.display = 'block';
-                form.reset();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            } catch (error) {
-                console.error('Erreur:', error);
-                loading.style.display = 'none';
-                errorMessage.style.display = 'block';
-            }
-        });
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
+            // Réinitialiser les champs conditionnels
             toggleFrameworkFields();
             toggleAssessmentFields();
             toggleLmsFields();
             toggleVrFields();
-        });
-    </script>
+
+        } catch (error) {
+            console.error('Erreur:', error);
+            loading.style.display = 'none';
+            errorMessage.style.display = 'block';
+        }
+    });
+
+    // Init au chargement
+    document.addEventListener('DOMContentLoaded', () => {
+        toggleFrameworkFields();
+        toggleAssessmentFields();
+        toggleLmsFields();
+        toggleVrFields();
+    });
+</script>
 </body>
 </html>
