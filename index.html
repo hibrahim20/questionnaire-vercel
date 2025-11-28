@@ -570,7 +570,7 @@
                         <label>Souhaitez-vous une visualisation en temps réel dans le navigateur, dans des casques VR, ou les deux ? <span class="required">*</span></label>
                         <div class="checkbox-group">
                             <div class="checkbox-item">
-                                <input type="checkbox" id="viz_browser" name="realTimeVisualizationNeed" value="Navigateur web (ordinateur ou tablette)" required>
+                                <input type="checkbox" id="viz_browser" name="realTimeVisualizationNeed" value="Navigateur web (ordinateur ou tablette)">
                                 <label for="viz_browser">Navigateur web (ordinateur ou tablette)</label>
                             </div>
                             <div class="checkbox-item">
@@ -709,7 +709,7 @@
                     <h2 class="section-title">Matériel et contexte d'utilisation</h2>
 
                     <div class="form-group">
-                        <label>Dans quels contextes les modules seront-ils principalement utilisés ?</label>
+                        <label>Dans quels contextes les modules seront-ils principaux utilisés ?</label>
                         <div class="checkbox-group">
                             <div class="checkbox-item">
                                 <input type="checkbox" id="context_classroom" name="usageContexts" value="Salle de cours / formation présentielle">
@@ -840,11 +840,8 @@
     </div>
 
     <script>
-        // Google Apps Script Web App URL - À remplacer par votre URL
-        //const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbygybZZ1tYQqoa0KX8WxwHUcmMzRinENunGb7bvW9VGR3NQwc57U7WAAl8nZ9-NYQ/exec';
-		//const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyii9eTvqz3TRHnk_c5UGZVsG-zbOhYNCTgpNMzzHliT8PtwN5tlX4akMnZm9dhccP-/exec';
-
-          const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyCnb5lNTXlv2udD9bF7rJmK-KF9PlIGhpwhE4mxFGuf0CH_sBqPtOG6THD-Q5m0VEL/exec';
+        // URL de ton Google Apps Script Web App
+        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyCnb5lNTXlv2udD9bF7rJmK-KF9PlIGhpwhE4mxFGuf0CH_sBqPtOG6THD-Q5m0VEL/exec';
 
         // Toggle conditional fields
         function toggleFrameworkFields() {
@@ -852,7 +849,7 @@
             const nameField = document.getElementById('frameworkNameField');
             const detailsField = document.getElementById('frameworkDetailsField');
             
-            if (value && (value.includes('Oui'))) {
+            if (value && value.includes('Oui')) {
                 nameField.classList.add('show');
                 detailsField.classList.add('show');
             } else {
@@ -865,7 +862,7 @@
             const value = document.querySelector('input[name="needAssessment"]:checked')?.value;
             const field = document.getElementById('assessmentDetailsField');
             
-            if (value && (value.includes('Oui'))) {
+            if (value && value.includes('Oui')) {
                 field.classList.add('show');
             } else {
                 field.classList.remove('show');
@@ -910,49 +907,65 @@
             button.parentElement.remove();
         }
 
+        function hasAtLeastOneChecked(name) {
+            return document.querySelectorAll('input[name="' + name + '"]:checked').length > 0;
+        }
+
         // Form submission
         document.getElementById('questionnaire').addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            const form = e.target;
             const loading = document.getElementById('loading');
             const successMessage = document.getElementById('successMessage');
             const errorMessage = document.getElementById('errorMessage');
 
-            // Hide messages
             successMessage.style.display = 'none';
             errorMessage.style.display = 'none';
+
+            // Validation HTML5 de base
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Validation des groupes de cases à cocher
+            if (!hasAtLeastOneChecked('audience')) {
+                alert("Veuillez sélectionner au moins un type de public concerné.");
+                return;
+            }
+
+            if (!hasAtLeastOneChecked('realTimeVisualizationNeed')) {
+                alert("Veuillez sélectionner au moins une option de visualisation (navigateur, casques VR, etc.).");
+                return;
+            }
+
             loading.style.display = 'block';
 
             try {
-                // Collect form data
-                const formData = new FormData(document.getElementById('questionnaire'));
+                const formData = new FormData(form);
                 const data = Object.fromEntries(formData);
 
-                // Collect checkboxes and radio buttons properly
+                // Checkboxes → gérer correctement les valeurs multiples
                 const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-                const radios = document.querySelectorAll('input[type="radio"]:checked');
-                
                 checkboxes.forEach(cb => {
                     if (data[cb.name]) {
-                        data[cb.name] = Array.isArray(data[cb.name]) ? 
-                            [...data[cb.name], cb.value] : 
-                            [data[cb.name], cb.value];
+                        data[cb.name] = Array.isArray(data[cb.name])
+                            ? [...data[cb.name], cb.value]
+                            : [data[cb.name], cb.value];
                     } else {
                         data[cb.name] = cb.value;
                     }
                 });
 
-                // Collect domains
+                // Domaines
                 const domains = Array.from(document.querySelectorAll('.domain-input'))
                     .map(input => input.value)
                     .filter(val => val.trim());
                 data.domains = domains.join('; ');
 
-                // Add timestamp
-                data.timestamp = new Date().toLocaleString('fr-FR');
-
-                // Send to Google Apps Script
-                const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                // Envoi vers Google Apps Script
+                await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
                     body: JSON.stringify(data)
@@ -960,9 +973,7 @@
 
                 loading.style.display = 'none';
                 successMessage.style.display = 'block';
-                document.getElementById('questionnaire').reset();
-                
-                // Scroll to top
+                form.reset();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
 
             } catch (error) {
