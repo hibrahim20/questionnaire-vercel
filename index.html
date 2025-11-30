@@ -603,7 +603,7 @@
                         <label>Niveau d'interactivité souhaité <span class="required">*</span></label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="interactivity_essential" name="interactivityLevel" value="Essentiel : navigation, points d'information, quiz simples" required>
+                                <input type="radio" id="interactivity_essential" name="interactivityLevel" value="Essentiel : navigation, points d'information, quiz simples" >
                                 <label for="interactivity_essential">Essentiel : navigation, points d'information, quiz simples</label>
                             </div>
                             <div class="radio-item">
@@ -691,7 +691,7 @@
                         <label id="i18n-real-time-visualization-label">Souhaitez-vous une visualisation en temps réel dans le navigateur, dans des casques VR, ou les deux ? <span class="required">*</span></label>
                         <div class="checkbox-group">
                             <div class="checkbox-item">
-                                <input type="checkbox" id="viz_browser" name="realTimeVisualizationNeed" value="Navigateur web (ordinateur ou tablette)" required>
+                                <input type="checkbox" id="viz_browser" name="realTimeVisualizationNeed" value="Navigateur web (ordinateur ou tablette)" >
                                 <label for="viz_browser" id="i18n-viz-browser">Navigateur web (ordinateur ou tablette)</label>
                             </div>
                             <div class="checkbox-item">
@@ -720,7 +720,7 @@
                         <label id="i18n-assessment-need-label">Souhaitez-vous intégrer de l'évaluation dans les modules immersifs ? <span class="required">*</span></label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="assessment_simple" name="needAssessment" value="Oui, de manière simple (quiz, validation de compréhension)" onchange="toggleAssessmentFields()" required>
+                                <input type="radio" id="assessment_simple" name="needAssessment" value="Oui, de manière simple (quiz, validation de compréhension)" onchange="toggleAssessmentFields()" >
                                 <label for="assessment_simple" id="i18n-assessment-simple">Oui, de manière simple (quiz, validation de compréhension)</label>
                             </div>
                             <div class="radio-item">
@@ -747,7 +747,7 @@
                         <label id="i18n-lms-label">Disposez-vous d'une plateforme LMS pour héberger et suivre les modules ? <span class="required">*</span></label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="lms_yes" name="hasLms" value="Oui" onchange="toggleLmsFields()" required>
+                                <input type="radio" id="lms_yes" name="hasLms" value="Oui" onchange="toggleLmsFields()" >
                                 <label for="lms_yes" id="i18n-lms-yes">Oui</label>
                             </div>
                             <div class="radio-item">
@@ -868,7 +868,7 @@
                         <label id="i18n-has-vr-headsets-label">Disposez-vous déjà de casques ou lunettes de réalité virtuelle ? <span class="required">*</span></label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="vr_yes" name="hasVrHeadsets" value="Oui" onchange="toggleVrFields()" required>
+                                <input type="radio" id="vr_yes" name="hasVrHeadsets" value="Oui" onchange="toggleVrFields()" >
                                 <label for="vr_yes" id="i18n-vr-yes">Oui</label>
                             </div>
                             <div class="radio-item">
@@ -910,7 +910,7 @@
                         <label id="i18n-desired-start-label">Horizon souhaité pour la mise en place des premiers modules <span class="required">*</span></label>
                         <div class="radio-group">
                             <div class="radio-item">
-                                <input type="radio" id="timeline_3months" name="desiredStart" value="Moins de 3 mois" required>
+                                <input type="radio" id="timeline_3months" name="desiredStart" value="Moins de 3 mois" >
                                 <label for="timeline_3months" id="i18n-timeline-3months">Moins de 3 mois</label>
                             </div>
                             <div class="radio-item">
@@ -1545,203 +1545,202 @@
             });
         }
 
-        // --- Fonctions de gestion des champs conditionnels (originales) ---
+       
+// --- Fonctions de gestion des champs conditionnels ---
 
-        function toggleFrameworkFields() {
-            const value = document.querySelector('input[name="hasPedagogicalFramework"]:checked')?.value;
-            const nameField = document.getElementById('frameworkNameField');
-            const detailsField = document.getElementById('frameworkDetailsField');
-            if (value && value.includes('Oui')) {
-                nameField.classList.add('show');
-                detailsField.classList.add('show');
-            } else {
-                nameField.classList.remove('show');
-                detailsField.classList.remove('show');
-            }
-        }
+function toggleFrameworkFields() {
+    const value = document.querySelector('input[name="hasPedagogicalFramework"]:checked')?.value;
+    const nameField = document.getElementById('frameworkNameField');
+    const detailsField = document.getElementById('frameworkDetailsField');
+    if (value && value.includes('Oui')) {
+        nameField.classList.add('show');
+        detailsField.classList.add('show');
+    } else {
+        nameField.classList.remove('show');
+        detailsField.classList.remove('show');
+    }
+}
 
+function toggleAssessmentFields() {
+    const value = document.querySelector('input[name="needAssessment"]:checked')?.value;
+    const field = document.getElementById('assessmentDetailsField');
+    if (value && value.includes('Oui')) {
+        field.classList.add('show');
+    } else {
+        field.classList.remove('show');
+    }
+}
 
-        function toggleAssessmentFields() {
-            const value = document.querySelector('input[name="needAssessment"]:checked')?.value;
-            const field = document.getElementById('assessmentDetailsField');
-            // La logique originale utilisait 'Oui' dans la valeur pour afficher le champ
-            if (value && value.includes('Oui')) {
-                field.classList.add('show');
-            } else {
-                field.classList.remove('show');
-            }
-        }
+function toggleLmsFields() {
+    const value = document.querySelector('input[name="hasLms"]:checked')?.value;
+    const field = document.getElementById('lmsNameField');
+    if (value === 'Oui') {
+        field.classList.add('show');
+    } else {
+        field.classList.remove('show');
+    }
+}
 
-        function toggleLmsFields() {
-            const value = document.querySelector('input[name="hasLms"]:checked')?.value;
-            const field = document.getElementById('lmsNameField');
-            if (value === 'Oui') {
-                field.classList.add('show');
-            } else {
-                field.classList.remove('show');
-            }
-        }
+function updateOtherContextValue() {
+    const checkbox = document.getElementById('context_other');
+    const text = document.getElementById('context_other_text').value.trim();
 
-		function updateOtherContextValue() {
-			const checkbox = document.getElementById('context_other');
-			const text = document.getElementById('context_other_text').value.trim();
+    if (checkbox.checked && text !== '') {
+        checkbox.value = 'Autre : ' + text;
+    } else {
+        checkbox.value = 'Autre';
+    }
+}
 
-			if (checkbox.checked && text !== '') {
-				checkbox.value = 'Autre : ' + text;
-			} else {
-				checkbox.value = 'Autre';
-			}
-		}
+function toggleVrFields() {
+    const value = document.querySelector('input[name="hasVrHeadsets"]:checked')?.value;
+    const field = document.getElementById('vrHeadsetsDetailsField');
+    if (value === 'Oui') {
+        field.classList.add('show');
+    } else {
+        field.classList.remove('show');
+    }
+}
 
-
-
-        function toggleVrFields() {
-            const value = document.querySelector('input[name="hasVrHeadsets"]:checked')?.value;
-            const field = document.getElementById('vrHeadsetsDetailsField');
-            if (value === 'Oui') {
-                field.classList.add('show');
-            } else {
-                field.classList.remove('show');
-            }
-        }
-
-        // --- Fonctions de gestion des domaines (multi-input) ---
+// --- Domaines (multi-input) ---
 
 function addDomain() {
     const group = document.getElementById('domainsGroup');
     const newItem = document.createElement('div');
     newItem.className = 'multi-input-item';
-    
-    const langSelect = document.getElementById('language-select'); // <- ici
-    const lang = langSelect ? langSelect.value : 'fr';             // fallback
-    const placeholder = translations[lang]['domain-placeholder'];
-    const removeText = translations[lang]['remove-button'];
+
+    const langSelect = document.getElementById('language-select');
+    const lang = langSelect ? langSelect.value : 'fr';
+    const t = translations[lang];
 
     newItem.innerHTML = `
-        <input type="text" class="domain-input" placeholder="${placeholder}">
-        <button type="button" onclick="removeDomain(this)">${removeText}</button>
+        <input type="text" class="domain-input" placeholder="${t['domain-placeholder']}">
+        <button type="button" onclick="removeDomain(this)">${t['remove-button']}</button>
     `;
     group.appendChild(newItem);
 }
 
-        function removeDomain(button) {
-            button.parentElement.remove();
+function removeDomain(button) {
+    button.parentElement.remove();
+}
+
+function hasAtLeastOneChecked(name) {
+    return document.querySelectorAll('input[name="' + name + '"]:checked').length > 0;
+}
+
+// --- Soumission du formulaire ---
+
+document.getElementById('questionnaire').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const loading = document.getElementById('loading');
+    const successMessage = document.getElementById('successMessage');
+    const errorMessage = document.getElementById('errorMessage');
+
+    const langSelect = document.getElementById('language-select');
+    const lang = langSelect ? langSelect.value : 'fr';
+    const t = translations[lang];
+
+    successMessage.style.display = 'none';
+    errorMessage.style.display = 'none';
+
+    // Validation HTML5 de base
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
+    // Validation de groupes de cases à cocher
+    if (!hasAtLeastOneChecked('audience')) {
+        alert(t['alert-audience']);
+        return;
+    }
+    if (!hasAtLeastOneChecked('realTimeVisualizationNeed')) {
+        alert(t['alert-visualization']);
+        return;
+    }
+
+    loading.style.display = 'block';
+
+    try {
+        const formData = new FormData(form);
+        const data = {};
+
+        // 1) Champs non-checkbox
+        for (const [key, value] of formData.entries()) {
+            const field = form.querySelector(`[name="${key}"]`);
+            if (field && field.type === 'checkbox') continue;
+            data[key] = value;
         }
 
-        function hasAtLeastOneChecked(name) {
-            return document.querySelectorAll('input[name="' + name + '"]:checked').length > 0;
-        }
+        // 2) Groupes de checkbox
+        const allCheckboxes = form.querySelectorAll('input[type="checkbox"]');
+        const checkboxNames = [...new Set([...allCheckboxes].map(cb => cb.name))];
 
-        // --- Soumission du formulaire ---
-        document.getElementById('questionnaire').addEventListener('submit', async (e) => {
-            e.preventDefault();
+        checkboxNames.forEach((name) => {
+            const checked = [...form.querySelectorAll(`input[name="${name}"]:checked`)];
+            if (checked.length === 0) return;
 
-            const form = e.target;
-            const loading = document.getElementById('loading');
-            const successMessage = document.getElementById('successMessage');
-            const errorMessage = document.getElementById('errorMessage');
-            const lang = document.getElementById('language-selector').value;
-            const t = translations[lang];
-
-            successMessage.style.display = 'none';
-            errorMessage.style.display = 'none';
-
-            // Validation HTML5 de base
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return;
-            }
-
-            // Validation de groupes de cases à cocher (messages d'alerte traduits)
-            if (!hasAtLeastOneChecked('audience')) {
-                alert(t['alert-audience']);
-                return;
-            }
-            if (!hasAtLeastOneChecked('realTimeVisualizationNeed')) {
-                alert(t['alert-visualization']);
-                return;
-            }
-
-            loading.style.display = 'block';
-
-            try {
-                const formData = new FormData(form);
-                const data = {};
-
-                // 1) D'abord, on remplit data avec tous les champs SAUF les checkboxes
-                for (const [key, value] of formData.entries()) {
-                    const field = form.querySelector(`[name="${key}"]`);
-                    if (field && field.type === 'checkbox') {
-                        // on ignore ici, on gère les checkboxes après
-                        continue;
-                    }
-                    data[key] = value;
-                }
-
-                // 2) Ensuite, on gère proprement les groupes de checkboxes
-                const allCheckboxes = form.querySelectorAll('input[type="checkbox"]');
-                const checkboxNames = [...new Set([...allCheckboxes].map(cb => cb.name))];
-
-                checkboxNames.forEach((name) => {
-                    const checked = [...form.querySelectorAll(`input[name="${name}"]:checked`)];
-                    if (checked.length === 0) return;
-
-                    if (checked.length === 1) {
-                        data[name] = checked[0].value;
-                    } else {
-                        data[name] = checked.map(cb => cb.value);
-                    }
-                });
-
-                // 3) Domaines (multi-input)
-                const domains = Array.from(document.querySelectorAll('.domain-input'))
-                    .map(input => input.value)
-                    .filter(val => val.trim());
-                data.domains = domains.join('; ');
-
-                // 4) Envoi vers Google Apps Script
-                await fetch(GOOGLE_APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify(data)
-                });
-
-                loading.style.display = 'none';
-                successMessage.style.display = 'block';
-                form.reset();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-
-                // Réinitialiser les champs conditionnels
-                toggleFrameworkFields();
-                toggleAssessmentFields();
-                toggleLmsFields();
-                toggleVrFields();
-
-            } catch (error) {
-                console.error('Erreur:', error);
-                loading.style.display = 'none';
-                errorMessage.style.display = 'block';
+            if (checked.length === 1) {
+                data[name] = checked[0].value;
+            } else {
+                data[name] = checked.map(cb => cb.value);
             }
         });
 
-        // --- Initialisation ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialiser les champs conditionnels
-            toggleFrameworkFields();
-            toggleAssessmentFields();
-            toggleLmsFields();
-            toggleVrFields();
+        // ٣) Domaines
+        const domains = Array.from(document.querySelectorAll('.domain-input'))
+            .map(input => input.value)
+            .filter(val => val.trim());
+        data.domains = domains.join('; ');
 
-            // Définir la langue par défaut (français)
-            const defaultLang = 'fr';
-            document.getElementById('language-selector').value = defaultLang;
-            setLanguage(defaultLang);
-
-            // Écouteur d'événement pour le changement de langue
-            document.getElementById('language-selector').addEventListener('change', (e) => {
-                setLanguage(e.target.value);
-            });
+        // ٤) Envoi
+        await fetch(GOOGLE_APPS_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify(data)
         });
-    </script>
+
+        loading.style.display = 'none';
+        successMessage.style.display = 'block';
+        form.reset();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Réinitialiser les conditionnels
+        toggleFrameworkFields();
+        toggleAssessmentFields();
+        toggleLmsFields();
+        toggleVrFields();
+
+    } catch (error) {
+        console.error('Erreur:', error);
+        loading.style.display = 'none';
+        errorMessage.style.display = 'block';
+    }
+});
+
+// --- Initialisation ---
+
+document.addEventListener('DOMContentLoaded', () => {
+    toggleFrameworkFields();
+    toggleAssessmentFields();
+    toggleLmsFields();
+    toggleVrFields();
+
+    const langSelect = document.getElementById('language-select');
+    const defaultLang = 'fr';
+    if (langSelect) {
+        langSelect.value = defaultLang;
+        setLanguage(defaultLang);
+
+        langSelect.addEventListener('change', (e) => {
+            setLanguage(e.target.value);
+        });
+    }
+});
+
+
+	   </script>
 </body>
 </html>
