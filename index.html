@@ -468,14 +468,34 @@
                     </div>
 
                     <div class="form-group conditional-field" id="frameworkNameField">
-                        <label for="frameworkName" id="i18n-framework-name-label">Nom du référentiel / cahier des charges</label>
+                        <label for="frameworkName" id="i18n-framework-name-label">Titre du référentiel ou cahier des charges (ex. Référentiel TOSA, Programme interne, etc.)</label>
                         <input type="text" id="frameworkName" name="frameworkName">
                     </div>
 
                     <div class="form-group conditional-field" id="frameworkDetailsField">
-                        <label for="frameworkDetails" id="i18n-framework-details-label">Détails sur les compétences visées</label>
+                        <label for="frameworkDetails" id="i18n-framework-details-label">Compétences visées(Veuillez préciser les compétences que vous souhaitez développer ou évaluer.)</label>
                         <textarea id="frameworkDetails" name="frameworkDetails"></textarea>
                     </div>
+					
+					<div class="form-group">
+						<label id="i18n-brand-guidelines-label">
+							Disposez-vous d'une charte graphique (logos, typographies, couleurs, etc.) que nous devrions suivre pour la création de votre contenu ? 
+							Cela nous permettrait de garantir une cohérence visuelle avec votre identité de marque.
+						</label>
+						<div class="radio-group">
+							<div class="radio-item">
+								<input type="radio" id="brand_guidelines_yes" name="hasBrandGuidelines" value="Oui" >
+								<label for="brand_guidelines_yes" id="i18n-brand-guidelines-yes">Oui</label>
+							</div>
+							<div class="radio-item">
+								<input type="radio" id="brand_guidelines_no" name="hasBrandGuidelines" value="Non"  checked>
+								<label for="brand_guidelines_no" id="i18n-brand-guidelines-no">Non</label>
+							</div>
+						</div>
+					</div>
+
+
+					
                 </div>
 
                 <!-- Section 3: Contenu et scénario -->
@@ -726,7 +746,7 @@
                     <h2 class="section-title" id="i18n-section-5-title">Matériel et contexte d'utilisation</h2>
 
                     <div class="form-group">
-                        <label id="i18n-usage-contexts-label">Dans quels contextes les modules seront-ils principaux utilisés ?</label>
+                        <label id="i18n-usage-contexts-label">Dans quels contextes les modules seront-ils principalement utilisés ?</label>
                         <div class="checkbox-group">
                             <div class="checkbox-item">
                                 <input type="checkbox" id="context_classroom" name="usageContexts" value="Salle de cours / formation présentielle">
@@ -745,8 +765,15 @@
                                 <label for="context_events" id="i18n-context-events">Événements, salons, journées portes ouvertes</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="context_other" name="usageContexts" value="Autre">
-                                <label for="context_other" id="i18n-context-other">Autre</label>
+								<div class="checkbox-item">
+								<input type="checkbox" id="context_other" name="usageContexts" value="Autre" onchange="updateOtherContextValue()" >
+								<label for="context_other" id="i18n-context-other">Autre</label>
+								</div>
+
+								<div class="sub-input">
+									<input type="text" id="context_other_text" placeholder="Précisez ici..." oninput="updateOtherContextValue()">
+								</div>
+
                             </div>
                         </div>
                     </div>
@@ -1447,6 +1474,7 @@
             }
         }
 
+
         function toggleAssessmentFields() {
             const value = document.querySelector('input[name="needAssessment"]:checked')?.value;
             const field = document.getElementById('assessmentDetailsField');
@@ -1467,6 +1495,19 @@
                 field.classList.remove('show');
             }
         }
+
+		function updateOtherContextValue() {
+			const checkbox = document.getElementById('context_other');
+			const text = document.getElementById('context_other_text').value.trim();
+
+			if (checkbox.checked && text !== '') {
+				checkbox.value = 'Autre : ' + text;
+			} else {
+				checkbox.value = 'Autre';
+			}
+		}
+
+
 
         function toggleVrFields() {
             const value = document.querySelector('input[name="hasVrHeadsets"]:checked')?.value;
