@@ -296,6 +296,32 @@
             background: white;
         }
 
+.header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: white;
+    border-bottom: 1px solid #eee;
+}
+
+.kaptia-logo {
+    height: 40px;
+    width: auto;
+}
+
+.language-select {
+    font-size: 13px;
+    padding: 4px 6px;
+    height: 28px;
+    min-width: 110px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #fafafa;
+    cursor: pointer;
+}
+
+
         @media (max-width: 600px) {
             .header h1 {
                 font-size: 22px;
@@ -320,21 +346,112 @@
                 width: 100%;
             }
         }
+		
+		
+		/* --- Global page background --- */
+body {
+    background: #f7f9fc;
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+/* --- Card / form containers --- */
+.form-group,
+.conditional-field {
+    background: #ffffff;
+    border: 1px solid #e5e9f0;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 18px;
+}
+
+/* --- Labels --- */
+label {
+    color: #333;
+    font-weight: 600;
+}
+
+/* --- Inputs & textareas --- */
+input[type="text"],
+input[type="file"],
+textarea,
+select {
+    border: 1px solid #ccd5e0;
+    border-radius: 6px;
+    padding: 8px;
+    width: 100%;
+    background: #ffffff;
+}
+
+/* --- Inputs focus state --- */
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #7b2ff7;
+    box-shadow: 0 0 4px rgba(123, 47, 247, 0.25);
+}
+
+/* --- Radio & checkbox highlights --- */
+.radio-item input:checked + label,
+.checkbox-item input:checked + label {
+    color: #7b2ff7;
+    font-weight: 700;
+}
+
+/* --- Section titles --- */
+h1, h2, h3 {
+    color: #7b2ff7;
+    font-weight: bold;
+}
+
+/* --- Header bar (logo + language) --- */
+.header-bar {
+    background: #ffffff;
+    border-bottom: 1px solid #e5e9f0;
+}
+
+/* --- Language select — small + discreet --- */
+.language-select {
+    background: #ffffff;
+    border: 1px solid #ccd5e0;
+}
+
+/* --- Buttons (if you have any later) --- */
+button {
+    background: linear-gradient(90deg, #7b2ff7, #14c8ff);
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+		
+		
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div class="header">
-            <select id="language-selector" class="language-selector">
-                <option value="fr">Français</option>
-                <option value="en">English</option>
-                <option value="es">Español</option>
-                <option value="de">Deutsch</option>
-            </select>
-            <h1 id="i18n-header-title">Préparer votre projet immersif</h1>
-            <p id="i18n-header-subtitle">Ce questionnaire permet de mieux comprendre votre contexte et vos besoins afin de proposer une solution immersive adaptée : contenus 3D/360°, scénarios interactifs, casques/lunettes, intégration LMS, suivi pédagogique.</p>
-        </div>
+	
+		<div class="header-bar">
+			<img src="KAPTIA_sans fond.png" alt="Kaptia Logo" class="kaptia-logo">
+			
+			<select id="language-select" class="language-select">
+				<option value="fr">Français</option>
+				<option value="en">English</option>
+				<option value="es">Español</option>
+				<option value="de">Deutsch</option>
+			</select>
+			<h1 id="i18n-header-title">Préparer votre projet immersif</h1>
+			<p id="i18n-header-subtitle">Ce questionnaire permet de mieux comprendre votre contexte et vos besoins afin de proposer une solution immersive adaptée : contenus 3D/360°, scénarios interactifs, casques/lunettes, intégration LMS, suivi pédagogique.</p>
+		</div>
 
         <div class="form-content">
             <div class="success-message" id="successMessage">
