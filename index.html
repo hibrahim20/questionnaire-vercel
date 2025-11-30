@@ -709,16 +709,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="domains" id="i18n-domains-label">Domaines d'expertise ou de compétence couverts par le scénario</label>
-                        <div class="multi-input-group" id="domainsGroup">
-                            <div class="multi-input-item">
-                                <input type="text" class="domain-input" placeholder="Domaine">
-                                <button type="button" onclick="removeDomain(this)" id="i18n-remove-button">Supprimer</button>
-                            </div>
-                        </div>
-                        <button type="button" class="add-button" onclick="addDomain()" id="i18n-add-domain-button">Ajouter un domaine</button>
-                    </div>
+                   
                 </div>
 
                 <!-- Section 4: Évaluation et suivi -->
@@ -1616,21 +1607,22 @@
 
         // --- Fonctions de gestion des domaines (multi-input) ---
 
-        function addDomain() {
-            const group = document.getElementById('domainsGroup');
-            const newItem = document.createElement('div');
-            newItem.className = 'multi-input-item';
-            
-            const lang = document.getElementById('language-selector').value;
-            const placeholder = translations[lang]['domain-placeholder'];
-            const removeText = translations[lang]['remove-button'];
+function addDomain() {
+    const group = document.getElementById('domainsGroup');
+    const newItem = document.createElement('div');
+    newItem.className = 'multi-input-item';
+    
+    const langSelect = document.getElementById('language-select'); // <- ici
+    const lang = langSelect ? langSelect.value : 'fr';             // fallback
+    const placeholder = translations[lang]['domain-placeholder'];
+    const removeText = translations[lang]['remove-button'];
 
-            newItem.innerHTML = `
-                <input type="text" class="domain-input" placeholder="${placeholder}">
-                <button type="button" onclick="removeDomain(this)">${removeText}</button>
-            `;
-            group.appendChild(newItem);
-        }
+    newItem.innerHTML = `
+        <input type="text" class="domain-input" placeholder="${placeholder}">
+        <button type="button" onclick="removeDomain(this)">${removeText}</button>
+    `;
+    group.appendChild(newItem);
+}
 
         function removeDomain(button) {
             button.parentElement.remove();
